@@ -110,3 +110,14 @@ footer {
 .project-card a:hover {
   text-decoration: underline;
 }
+
+#starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: -1; /* behind everything */
+  background: radial-gradient(ellipse at bottom, #1a1a1a 0%, #000000 100%);
+}
