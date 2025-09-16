@@ -10,7 +10,7 @@ export function initGalaxy() {
     let lastScrollY = window.scrollY;
     const maxWarp = 10;
     const minDelta = 20;
-    const warpLerpSpeed = 0.1;
+    const warpLerpSpeed = 0.05;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -91,7 +91,7 @@ export function initGalaxy() {
             ctx.globalAlpha = star.alpha;
 
             // Warp effect stretch based on scroll
-            const stretch = warpFactor * 2;
+            const stretch = warpFactor * 130;
             ctx.fillStyle = star.color;
             ctx.beginPath();
             ctx.ellipse(star.x, star.y, star.radius, star.radius + stretch, 0, 0, Math.PI * 2);
