@@ -50,14 +50,24 @@ export function initSpace() {
 
     const starColors = ["#ffffff", "#ffe9c4", "#c4e1ff", "#ffb6c1"];
 
-    const nebula = [];
-    for (let i = 0; i < 10; i++) {
-        nebula.push({
+    const nebulas = [];
+    for (let i = 0; i < 3; i++) {
+        const nebula = {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            radius: 100 + Math.random() * 800,
-            color: `rgba(${50 + Math.random() * 150}, ${0 + Math.random() * 50}, ${50 + Math.random() * 250}, 0.05)`
-        });
+            blobs: []
+        };
+
+        const numBlobs = 3;
+        for (let j = 0; j < numBlobs; j++) {
+            nebula.blobs.push({
+                x: nebula.x + (Math.random() - 0.5) * 800, // spread
+                y: nebula.y + (Math.random() - 0.5) * 1000,
+                radius: 100 + Math.random() * 700,
+                color: `rgba(${50 + Math.random() * 150}, ${0 + Math.random() * 50}, ${100 + Math.random() * 155}, ${0.2 + Math.random() * 0.002})`
+            });
+        }
+        nebulas.push(nebula);
     }
 
     // Initialize stars
@@ -150,12 +160,16 @@ export function initSpace() {
     }
 
     function drawNebula() {
-        nebula.forEach(n => {
-            const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
-            gradient.addColorStop(0, n.color);
-            gradient.addColorStop(1, "rgba(0,0,0,0)");
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        nebulas.forEach(nebula => {
+            nebula.blobs.forEach(b => {
+                const gradient = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.radius);
+                gradient.addColorStop(0, b.color);
+                gradient.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
         });
     }
     
@@ -177,6 +191,6 @@ export function initSky() {
         
         requestAnimationFrame(animate);
     }
-    
+
     animate();
 }
