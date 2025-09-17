@@ -9,8 +9,8 @@ export function initSpace() {
     let warpFactor = 0;
     let lastScrollY = window.scrollY;
     const maxWarp = 10;
-    const minDelta = 20;
-    const warpLerpSpeed = 0.05;
+    const minDelta = 10;
+    const warpLerpSpeed = 0.1;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -32,7 +32,7 @@ export function initSpace() {
         warpFactor += (targetWarp - warpFactor) * warpLerpSpeed;
 
         // Parallax (opposite of scroll)
-        const parallaxStrength = 0.2; // smaller = slower movement
+        const parallaxStrength = 0.5; // smaller = slower movement
         stars.forEach(star => {
             star.y -= delta * star.parallax * parallaxStrength; 
             // wrap around so stars don’t vanish
@@ -61,9 +61,9 @@ export function initSpace() {
         const numBlobs = 3;
         for (let j = 0; j < numBlobs; j++) {
             nebula.blobs.push({
-                x: nebula.x + (Math.random() - 0.5) * 800, // spread
-                y: nebula.y + (Math.random() - 0.5) * 1000,
-                radius: 100 + Math.random() * 700,
+                x: nebula.x + (Math.random() - 0.5) * 600, // spread
+                y: nebula.y + (Math.random() - 0.5) * 700,
+                radius: 100 + Math.random() * 675,
                 color: `rgba(${50 + Math.random() * 150}, ${0 + Math.random() * 50}, ${100 + Math.random() * 155}, ${0.2 + Math.random() * 0.002})`
             });
         }
