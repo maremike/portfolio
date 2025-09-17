@@ -9,8 +9,8 @@ export function initSpace() {
     let warpFactor = 0;
     let lastScrollY = window.scrollY;
     const maxWarp = 10;
-    const minDelta = 10;
-    const warpLerpSpeed = 0.1;
+    const minDelta = 30;
+    const warpLerpSpeed = 0.08;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
