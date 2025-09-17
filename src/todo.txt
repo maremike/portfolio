@@ -5,9 +5,11 @@
 - Or from space: Black/White/Yellow/Orange
 - Add Captcha for contacting
 
-- Timeline with jobs/internships/projects
+- Timeline with experience(internships)/projects/education
 - List of Projects
+- List of Products
+- Showcase of Products
 - Hobbies
-- Social Media
-- Contact
+- Social Media/Contact
+- Skills (Languages/Programming Languages/Certificates)
 - Impressum

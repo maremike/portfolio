@@ -1,10 +1,10 @@
+import { initSpace } from "./background/overlay.js";
 import { renderProjects } from "./projects.js";
-import { initGalaxy } from "./background/overlay.js";
 import { setupForm } from "./contact.js";
 
 function init() {
+    initSpace();
     renderProjects();
     setupForm();
-    initGalaxy();
 }
 document.addEventListener('DOMContentLoaded', init);

@@ -1,5 +1,5 @@
-export function initGalaxy() {
-    const canvas = document.getElementById("starfield");
+export function initSpace() {
+    const canvas = document.getElementById("space");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
@@ -168,5 +168,15 @@ export function initGalaxy() {
         requestAnimationFrame(animate);
     }
 
+    animate();
+}
+
+export function initSky() {
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        requestAnimationFrame(animate);
+    }
+    
     animate();
 }
