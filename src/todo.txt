@@ -5,8 +5,9 @@
 - Add Captcha for contacting
 - Remove elements from light/dark mode before switching mode
 - Implement contact logic
+- Backgroudn ideas: Neuron network, World map, moon surface, Soft Bokeh Effect, Aurora Effect, Soft Floating Balloons/kites, Light Flares/glows
 
-- Timeline with experience(internships)/projects/education
+- Timeline with experience(internships)/projects/education (add pictures switching to timeline showcasing the home location with a marker showing the location)
 - List of Projects
 - List of Products
 - Showcase of Products
