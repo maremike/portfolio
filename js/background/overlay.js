@@ -1,5 +1,5 @@
-export function initSpace() {
-    const canvas = document.getElementById("space");
+export function initSpaceOverlay() {
+    const canvas = document.getElementById("dark");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
@@ -185,12 +185,148 @@ export function initSpace() {
     animate();
 }
 
-export function initSky() {
+export function initSkyOverlay() {
+    const canvas = document.getElementById('light');
+    const ctx = canvas.getContext('2d');
+
+    const clouds = [];
+    let maxClouds = 50;
+    let windSpeed = 1.3; // static
+    let windDirection = Math.random() * Math.PI * 2;
+
+    // Track scroll for parallax
+    let lastScrollY = window.scrollY;
+    let scrollY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+        scrollY = window.scrollY;
+    });
+
+    function createCloud(spawnOutside = false) {
+        const size = 40 + Math.random() * 60;
+        const opacity = 0.3 + Math.random() * 0.5;
+
+        let x, y;
+        if (spawnOutside) {
+            const edge = Math.floor(Math.random() * 4);
+            switch(edge) {
+                case 0: x = Math.random() * canvas.width; y = -size * 2; break;
+                case 1: x = canvas.width + size * 2; y = Math.random() * canvas.height; break;
+                case 2: x = Math.random() * canvas.width; y = canvas.height + size * 2; break;
+                case 3: x = -size * 2; y = Math.random() * canvas.height; break;
+            }
+        } else {
+            x = Math.random() * canvas.width;
+            y = Math.random() * canvas.height;
+        }
+
+        const puffCount = 5 + Math.floor(Math.random() * 6);
+        const puffs = [];
+        for (let i = 0; i < puffCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = (Math.random() * 0.6 + 0.2) * size;
+            const radius = size * (0.3 + Math.random() * 0.5);
+            puffs.push({ x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, radius });
+        }
+
+        return {
+            x, y, size, opacity,
+            speed: 0.3 + Math.random() * 0.5,
+            speedFactor: 0.8 + Math.random() * 0.4,
+            drift: (Math.random() - 0.5) * 0.1,
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.004,
+            growthRate: 0.02 + Math.random() * 0.03,
+            puffs
+        };
+    }
+
+    function drawCloud(cloud) {
+        ctx.save();
+        ctx.globalAlpha = cloud.opacity;
+        ctx.fillStyle = "#f0f0f0ff";
+
+        ctx.translate(cloud.x, cloud.y);
+        ctx.rotate(cloud.rotation);
+
+        ctx.beginPath();
+        cloud.puffs.forEach(p => {
+            ctx.moveTo(p.x + p.radius, p.y);
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        });
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function fluctuateWindDirection() {
+        // gentle random fluctuation
+        windDirection += (Math.random() - 0.5) * 0.01;
+    }
+
+    function updateWindFromScroll() {
+        const scrollDelta = scrollY - lastScrollY;
+        if (scrollDelta !== 0) {
+            const targetDirection = scrollDelta > 0 ? Math.PI / 2 : -Math.PI / 2;
+            const diff = ((targetDirection - windDirection + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+
+            // inertia proportional to scroll speed
+            const inertiaFactor = 0.002 + Math.min(Math.abs(scrollDelta) * 0.0015, 0.05);
+            windDirection += diff * inertiaFactor;
+        }
+        lastScrollY = scrollY;
+    }
+
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
+
+        fluctuateWindDirection();
+        updateWindFromScroll();
+
+        for (let i = clouds.length - 1; i >= 0; i--) {
+            const cloud = clouds[i];
+            const parallaxY = (scrollY / window.innerHeight) * 0.5;
+
+            const cloudSpeed = cloud.speed * cloud.speedFactor;
+            cloud.x += Math.cos(windDirection) * cloudSpeed * windSpeed;
+            cloud.y += Math.sin(windDirection) * cloudSpeed * windSpeed + cloud.drift + parallaxY;
+            cloud.rotation += cloud.rotationSpeed;
+
+            // grow cloud
+            cloud.size += cloud.growthRate;
+            cloud.puffs.forEach(p => {
+                p.x *= 1 + cloud.growthRate / cloud.size;
+                p.y *= 1 + cloud.growthRate / cloud.size;
+                p.radius *= 1 + cloud.growthRate / cloud.size;
+            });
+
+            const margin = cloud.size * 3;
+            if (cloud.x < -margin || cloud.x > canvas.width + margin ||
+                cloud.y < -margin || cloud.y > canvas.height + margin) {
+                clouds.splice(i, 1);
+                clouds.push(createCloud(true));
+                continue;
+            }
+
+            drawCloud(cloud);
+        }
+
         requestAnimationFrame(animate);
     }
+
+    function handleResize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function initClouds() {
+        clouds.length = 0;
+        for (let i = 0; i < maxClouds; i++) clouds.push(createCloud(false));
+    }
+
+    handleResize();
+    initClouds();
+    window.addEventListener('resize', handleResize);
 
     animate();
 }
