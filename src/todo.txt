@@ -1,0 +1,13 @@
+- Add Logo
+- Add Picture
+- Implement different backgrounds that are time dependent. 
+- Maybe from earths view: Night (Black), Sunrise (Black/Orange/Blue), Day (Blue), Sunset (Sunrise)...
+- Or from space: Black/White/Yellow/Orange
+- Add Captcha for contacting
+
+- Timeline with jobs/internships/projects
+- List of Projects
+- Hobbies
+- Social Media
+- Contact
+- Impressum

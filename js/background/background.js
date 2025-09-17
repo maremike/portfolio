@@ -1,3 +1,0 @@
-// Implement different backgrounds that are time dependent. 
-// Maybe from earths view: Night (Black), Sunrise (Black/Orange/Blue), Day (Blue), Sunset (Sunrise)...
-// Or from space: Black/White/Yellow/Orange
