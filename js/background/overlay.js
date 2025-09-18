@@ -221,7 +221,7 @@ export function initCloudOverlay() {
     const scale = getScaleFactor();
 
     const CONFIG = {
-        MAX_CLOUDS: Math.floor(180 * scale * scale), // more clouds on bigger screens
+        MAX_CLOUDS: Math.floor(100 * scale * scale), // more clouds on bigger screens
 
         // Wind
         WIND_SPEED: 2.3 * scale,
@@ -233,8 +233,8 @@ export function initCloudOverlay() {
         ROTATION_VARIANCE: 0.5,
 
         // Clouds
-        BASE_CLOUD_SIZE: 100 * scale,
-        SIZE_VARIANCE: 60 * scale,
+        BASE_CLOUD_SIZE: 140 * scale,
+        SIZE_VARIANCE: 30 * scale,
         CLOUD_COLOR: "#f0f0f0",
         BASE_OPACITY: 0.4,
         OPACITY_VARIANCE: 0.4,
