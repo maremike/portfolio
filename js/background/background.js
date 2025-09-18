@@ -1,7 +1,7 @@
 import { getTimeFactor } from "../utility/time.js";
 
 // Factor to stretch the gradient beyond canvas width
-const GRADIENT_STRETCH_FACTOR = 10000; 
+const GRADIENT_STRETCH_FACTOR = 1000; 
 
 // Rotation in degrees (0 = horizontal left→right)
 const GRADIENT_ROTATION = 0;

@@ -240,11 +240,11 @@ export function initCloudOverlay() {
         OPACITY_VARIANCE: 0.4,
 
         // Parallax
-        PARALLAX_MIN_DELTA: 0.0003,
-        PARALLAX_SPEED: 0.0003 * scale,
+        PARALLAX_MIN_DELTA: 0.0005,
+        PARALLAX_SPEED: 0.0005 * scale,
 
         // Gradient
-        GRADIENT_STRETCH_FACTOR: 1000
+        GRADIENT_STRETCH_FACTOR: 10000
     };
 
     const canvas = document.getElementById('clouds');
