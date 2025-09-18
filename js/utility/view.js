@@ -1,7 +1,13 @@
 export function getScaleFactor() {
     const BASE_WIDTH = 1920;
     const BASE_HEIGHT = 1080;
-    const screenArea = window.innerWidth * window.innerHeight;
+
+    // Get screen size in pixels, adjusted for device pixel ratio
+    const width = window.innerWidth * window.devicePixelRatio;
+    const height = window.innerHeight * window.devicePixelRatio;
+
+    const screenArea = width * height;
     const baseArea = BASE_WIDTH * BASE_HEIGHT;
-    return Math.sqrt(screenArea / baseArea); // sqrt keeps scaling moderate
+
+    return Math.sqrt(screenArea / baseArea); // moderate scaling
 }

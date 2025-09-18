@@ -6,21 +6,21 @@ export function initSpaceOverlay() {
 
     const CONFIG = {
         // Stars
-        NUM_STARS: Math.floor(1000 * scale * scale), // quadratic scaling for density
+        NUM_STARS: Math.floor(400 * scale * scale), // quadratic scaling for density
         STAR_COLORS: ["#ffffff", "#ffe9c4", "#c4e1ff", "#ffb6c1"],
-        STAR_BRIGHTNESS: 1.0,
+        STAR_BRIGHTNESS: 0.9,
         STAR_ROAMING: 0.15 * scale,
-        STAR_FADE_SPEED: 0.02,
+        STAR_FADE_SPEED: 0.012,
         STAR_3D_DEPTH_MIN: 0.005,
-        STAR_3D_DEPTH_MAX: 0.5,
+        STAR_3D_DEPTH_MAX: 0.7,
 
         // Nebulas
         NUM_NEBULAS: Math.max(2, Math.floor(2 * scale)),
         NUM_BLOBS: Math.max(3, Math.floor(2 * scale)),
         NEBULA_SPREAD_X: 1000 * scale,
         NEBULA_SPREAD_Y: 1200 * scale,
-        NEBULA_BASE_RADIUS: 800 * scale,
-        NEBULA_RADIUS_VARIANCE: 100 * scale,
+        NEBULA_BASE_RADIUS: 580 * scale,
+        NEBULA_RADIUS_VARIANCE: 120 * scale,
 
         // Meteors
         METEOR_CHANCE_IDLE: 0.012,
@@ -34,7 +34,7 @@ export function initSpaceOverlay() {
         // Warp & Parallax
         MAX_WARP: 200 * scale,
         SCROLL_MIN_DELTA: 30,
-        WARP_LERP_SPEED: 0.14,
+        WARP_LERP_SPEED: 0.11,
         PARALLAX_STRENGTH: 0.5 / scale // larger screens = faster parallax
     };
 
@@ -221,20 +221,20 @@ export function initCloudOverlay() {
     const scale = getScaleFactor();
 
     const CONFIG = {
-        MAX_CLOUDS: Math.floor(100 * scale * scale), // more clouds on bigger screens
+        MAX_CLOUDS: Math.floor(22 * scale * scale), // more clouds on bigger screens
 
         // Wind
-        WIND_SPEED: 2.3 * scale,
-        WIND_DIRECTION_CHANGE_PROB: 0.01,
+        WIND_SPEED: 1.1 * scale,
+        WIND_DIRECTION_CHANGE_PROB: 1,
         WIND_DIRECTION_CHANGE_DEGREES: 2,
 
         // Rotation
-        ROTATION_FACTOR: 0.004 * scale,
-        ROTATION_VARIANCE: 0.5,
+        ROTATION_FACTOR: 0.002 * scale,
+        ROTATION_VARIANCE: 0.3,
 
         // Clouds
-        BASE_CLOUD_SIZE: 140 * scale,
-        SIZE_VARIANCE: 30 * scale,
+        BASE_CLOUD_SIZE: 60 * scale,
+        SIZE_VARIANCE: 20 * scale,
         CLOUD_COLOR: "#f0f0f0",
         BASE_OPACITY: 0.4,
         OPACITY_VARIANCE: 0.4,
