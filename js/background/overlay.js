@@ -1,16 +1,58 @@
+function getScaleFactor() {
+    const BASE_WIDTH = 1920;
+    const BASE_HEIGHT = 1080;
+    const screenArea = window.innerWidth * window.innerHeight;
+    const baseArea = BASE_WIDTH * BASE_HEIGHT;
+    return Math.sqrt(screenArea / baseArea); // sqrt keeps scaling moderate
+}
+
 export function initSpaceOverlay() {
+    const scale = getScaleFactor();
+
+    const CONFIG = {
+        // Stars
+        NUM_STARS: Math.floor(250 * scale * scale), // quadratic scaling for density
+        STAR_COLORS: ["#ffffff", "#ffe9c4", "#c4e1ff", "#ffb6c1"],
+        STAR_BRIGHTNESS: 1.0,
+        STAR_ROAMING: 0.3 * scale,
+        STAR_FADE_SPEED: 0.02,
+        STAR_3D_DEPTH_MIN: 0.2,
+        STAR_3D_DEPTH_MAX: 1.5,
+
+        // Nebulas
+        NUM_NEBULAS: Math.max(2, Math.floor(3 * scale)),
+        NUM_BLOBS: Math.max(3, Math.floor(3 * scale)),
+        NEBULA_SPREAD_X: 600 * scale,
+        NEBULA_SPREAD_Y: 700 * scale,
+        NEBULA_BASE_RADIUS: 100 * scale,
+        NEBULA_RADIUS_VARIANCE: 675 * scale,
+
+        // Meteors
+        METEOR_CHANCE_IDLE: 0.03,
+        METEOR_CHANCE_SCROLL: 0.1,
+        METEOR_BRIGHTNESS: 1.0,
+        METEOR_MIN_LENGTH: 50 * scale,
+        METEOR_MAX_LENGTH: 130 * scale,
+        METEOR_MIN_SPEED: 4 * scale,
+        METEOR_MAX_SPEED: 10 * scale,
+
+        // Warp & Parallax
+        MAX_WARP: 10 * scale,
+        SCROLL_MIN_DELTA: 30,
+        WARP_LERP_SPEED: 0.08,
+        PARALLAX_STRENGTH: 0.5 / scale // larger screens = faster parallax
+    };
+
     const canvas = document.getElementById("dark");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
     const stars = [];
-    const numStars = 250;
     const meteors = [];
+    const nebulas = [];
+
     let warpFactor = 0;
     let lastScrollY = window.scrollY;
-    const maxWarp = 10;
-    const minDelta = 30;
-    const warpLerpSpeed = 0.08;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -26,21 +68,19 @@ export function initSpaceOverlay() {
 
         // Warp stretch
         let targetWarp = 0;
-        if (Math.abs(delta) > minDelta) {
-            targetWarp = Math.min(Math.abs(delta - minDelta) * 0.01, maxWarp);
+        if (Math.abs(delta) > CONFIG.SCROLL_MIN_DELTA) {
+            targetWarp = Math.min(Math.abs(delta - CONFIG.SCROLL_MIN_DELTA) * 0.01, CONFIG.MAX_WARP);
         }
-        warpFactor += (targetWarp - warpFactor) * warpLerpSpeed;
+        warpFactor += (targetWarp - warpFactor) * CONFIG.WARP_LERP_SPEED;
 
-        // Parallax (opposite of scroll)
-        const parallaxStrength = 0.5; // smaller = slower movement
+        // Parallax
         stars.forEach(star => {
-            star.y -= delta * star.parallax * parallaxStrength; 
-            // wrap around so stars don’t vanish
+            star.y -= delta * star.parallax * CONFIG.PARALLAX_STRENGTH;
             if (star.y < 0) star.y += canvas.height;
             if (star.y > canvas.height) star.y -= canvas.height;
         });
         meteors.forEach(meteor => {
-            meteor.y -= delta * meteor.parallax * parallaxStrength;
+            meteor.y -= delta * meteor.parallax * CONFIG.PARALLAX_STRENGTH;
             if (meteor.y < 0) meteor.y += canvas.height;
             if (meteor.y > canvas.height) meteor.y -= canvas.height;
         });
@@ -48,52 +88,49 @@ export function initSpaceOverlay() {
         lastScrollY = currentY;
     }, { passive: true });
 
-    const starColors = ["#ffffff", "#ffe9c4", "#c4e1ff", "#ffb6c1"];
-
-    const nebulas = [];
-    for (let i = 0; i < 3; i++) {
+    // Nebulas
+    for (let i = 0; i < CONFIG.NUM_NEBULAS; i++) {
         const nebula = {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             blobs: []
         };
 
-        const numBlobs = 3;
-        for (let j = 0; j < numBlobs; j++) {
+        for (let j = 0; j < CONFIG.NUM_BLOBS; j++) {
             nebula.blobs.push({
-                x: nebula.x + (Math.random() - 0.5) * 600, // spread
-                y: nebula.y + (Math.random() - 0.5) * 700,
-                radius: 100 + Math.random() * 675,
-                color: `rgba(${50 + Math.random() * 150}, ${0 + Math.random() * 50}, ${100 + Math.random() * 155}, ${0.2 + Math.random() * 0.002})`
+                x: nebula.x + (Math.random() - 0.5) * CONFIG.NEBULA_SPREAD_X,
+                y: nebula.y + (Math.random() - 0.5) * CONFIG.NEBULA_SPREAD_Y,
+                radius: CONFIG.NEBULA_BASE_RADIUS + Math.random() * CONFIG.NEBULA_RADIUS_VARIANCE,
+                color: `rgba(${50 + Math.random() * 150}, ${Math.random() * 50}, ${100 + Math.random() * 155}, ${0.2 + Math.random() * 0.2})`
             });
         }
         nebulas.push(nebula);
     }
 
-    // Initialize stars
-    for (let i = 0; i < numStars; i++) {
+    // Stars
+    for (let i = 0; i < CONFIG.NUM_STARS; i++) {
         stars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             radius: Math.random() * 1.5,
-            color: starColors[Math.floor(Math.random() * starColors.length)],
-            alpha: Math.random(),
-            alphaDir: Math.random() < 0.5 ? 0.01 : -0.01, // fade in/out
-            dx: (Math.random() - 0.5) * 0.3, // small drift
-            dy: (Math.random() - 0.5) * 0.3,
-            parallax: 0.2 + Math.random() * 1.3 // depth factor (0.2 = far, 1.5 = close)
+            color: CONFIG.STAR_COLORS[Math.floor(Math.random() * CONFIG.STAR_COLORS.length)],
+            alpha: Math.random() * CONFIG.STAR_BRIGHTNESS,
+            alphaDir: (Math.random() < 0.5 ? 1 : -1) * Math.random() * CONFIG.STAR_FADE_SPEED,
+            dx: (Math.random() - 0.5) * CONFIG.STAR_ROAMING,
+            dy: (Math.random() - 0.5) * CONFIG.STAR_ROAMING,
+            parallax: CONFIG.STAR_3D_DEPTH_MIN + Math.random() * (CONFIG.STAR_3D_DEPTH_MAX - CONFIG.STAR_3D_DEPTH_MIN)
         });
     }
 
     function spawnMeteor() {
-        if (Math.random() < 0.03 || warpFactor > 0.1) {
+        if (Math.random() < CONFIG.METEOR_CHANCE_IDLE || warpFactor > CONFIG.METEOR_CHANCE_SCROLL) {
             meteors.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                length: Math.random() * 80 + 50,
-                speed: Math.random() * 6 + 4,
-                opacity: 1,
-                parallax: 0.2 + Math.random() * 1.3 // depth effect (0.5–1.0)
+                length: CONFIG.METEOR_MIN_LENGTH + Math.random() * (CONFIG.METEOR_MAX_LENGTH - CONFIG.METEOR_MIN_LENGTH),
+                speed: CONFIG.METEOR_MIN_SPEED + Math.random() * (CONFIG.METEOR_MAX_SPEED - CONFIG.METEOR_MIN_SPEED),
+                opacity: CONFIG.METEOR_BRIGHTNESS,
+                parallax: CONFIG.STAR_3D_DEPTH_MIN + Math.random() * (CONFIG.STAR_3D_DEPTH_MAX - CONFIG.STAR_3D_DEPTH_MIN)
             });
         }
     }
@@ -102,35 +139,35 @@ export function initSpaceOverlay() {
         for (let i = stars.length - 1; i >= 0; i--) {
             const star = stars[i];
 
-            // Update alpha (fade in/out)
+            // Update alpha
             star.alpha += star.alphaDir;
-            if (star.alpha >= 1) star.alphaDir = -Math.random() * 0.02;
+            if (star.alpha >= CONFIG.STAR_BRIGHTNESS) star.alphaDir = -Math.random() * CONFIG.STAR_FADE_SPEED;
             if (star.alpha <= 0) {
-                // Respawn star
+                // Respawn
                 star.x = Math.random() * canvas.width;
                 star.y = Math.random() * canvas.height;
                 star.alpha = 0;
-                star.alphaDir = Math.random() * 0.02;
-                star.dx = (Math.random() - 0.5) * 0.2;
-                star.dy = (Math.random() - 0.5) * 0.2;
-                star.color = starColors[Math.floor(Math.random() * starColors.length)];
-                star.parallax = 0.2 + Math.random() * 1.3;
+                star.alphaDir = Math.random() * CONFIG.STAR_FADE_SPEED;
+                star.dx = (Math.random() - 0.5) * CONFIG.STAR_ROAMING;
+                star.dy = (Math.random() - 0.5) * CONFIG.STAR_ROAMING;
+                star.color = CONFIG.STAR_COLORS[Math.floor(Math.random() * CONFIG.STAR_COLORS.length)];
+                star.parallax = CONFIG.STAR_3D_DEPTH_MIN + Math.random() * (CONFIG.STAR_3D_DEPTH_MAX - CONFIG.STAR_3D_DEPTH_MIN);
             }
 
             ctx.globalAlpha = star.alpha;
 
-            // Warp effect stretch based on scroll
-            const stretch = warpFactor * 130 * star.parallax; // closer stars stretch more
+            // Warp stretch
+            const stretch = warpFactor * 130 * star.parallax;
             ctx.fillStyle = star.color;
             ctx.beginPath();
             ctx.ellipse(star.x, star.y, star.radius, star.radius + stretch, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Random drift
+            // Drift
             star.x += star.dx;
             star.y += star.dy;
 
-            // Wrap around
+            // Wrap
             if (star.x < 0) star.x = canvas.width;
             if (star.x > canvas.width) star.x = 0;
             if (star.y < 0) star.y = canvas.height;
@@ -186,12 +223,36 @@ export function initSpaceOverlay() {
 }
 
 export function initSkyOverlay() {
+    const scale = getScaleFactor();
+
+    const CONFIG = {
+        MAX_CLOUDS: Math.floor(50 * scale * scale), // more clouds on bigger screens
+
+        // Wind
+        WIND_SPEED: 1.3 * scale,
+        WIND_DIRECTION_CHANGE_PROB: 0.01,
+        WIND_DIRECTION_CHANGE_DEGREES: 2,
+
+        // Rotation
+        ROTATION_FACTOR: 0.004 * scale,
+        ROTATION_VARIANCE: 0.5,
+
+        // Clouds
+        BASE_CLOUD_SIZE: 60 * scale,
+        SIZE_VARIANCE: 30 * scale,
+        CLOUD_COLOR: "#f0f0f0",
+        BASE_OPACITY: 0.5,
+        OPACITY_VARIANCE: 0.3,
+
+        // Parallax
+        PARALLAX_MIN_DELTA: 0.002,
+        PARALLAX_SPEED: 0.0015 * scale
+    };
+
     const canvas = document.getElementById('light');
     const ctx = canvas.getContext('2d');
 
     const clouds = [];
-    let maxClouds = 50;
-    let windSpeed = 1.3; // static
     let windDirection = Math.random() * Math.PI * 2;
 
     // Track scroll for parallax
@@ -203,8 +264,8 @@ export function initSkyOverlay() {
     });
 
     function createCloud(spawnOutside = false) {
-        const size = 40 + Math.random() * 60;
-        const opacity = 0.3 + Math.random() * 0.5;
+        const size = CONFIG.BASE_CLOUD_SIZE + (Math.random() - 0.5) * 2 * CONFIG.SIZE_VARIANCE;
+        const opacity = Math.max(0, CONFIG.BASE_OPACITY + (Math.random() - 0.5) * 2 * CONFIG.OPACITY_VARIANCE);
 
         let x, y;
         if (spawnOutside) {
@@ -235,7 +296,8 @@ export function initSkyOverlay() {
             speedFactor: 0.8 + Math.random() * 0.4,
             drift: (Math.random() - 0.5) * 0.1,
             rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: (Math.random() - 0.5) * 0.004,
+            rotationSpeed: (Math.random() - 0.5) * CONFIG.ROTATION_FACTOR *
+                           (1 - CONFIG.ROTATION_VARIANCE + Math.random() * CONFIG.ROTATION_VARIANCE * 2),
             growthRate: 0.02 + Math.random() * 0.03,
             puffs
         };
@@ -244,7 +306,7 @@ export function initSkyOverlay() {
     function drawCloud(cloud) {
         ctx.save();
         ctx.globalAlpha = cloud.opacity;
-        ctx.fillStyle = "#f0f0f0ff";
+        ctx.fillStyle = CONFIG.CLOUD_COLOR;
 
         ctx.translate(cloud.x, cloud.y);
         ctx.rotate(cloud.rotation);
@@ -260,8 +322,10 @@ export function initSkyOverlay() {
     }
 
     function fluctuateWindDirection() {
-        // gentle random fluctuation
-        windDirection += (Math.random() - 0.5) * 0.01;
+        if (Math.random() < CONFIG.WIND_DIRECTION_CHANGE_PROB) {
+            const maxChange = CONFIG.WIND_DIRECTION_CHANGE_DEGREES * Math.PI / 180;
+            windDirection += (Math.random() - 0.5) * 2 * maxChange;
+        }
     }
 
     function updateWindFromScroll() {
@@ -270,8 +334,7 @@ export function initSkyOverlay() {
             const targetDirection = scrollDelta > 0 ? Math.PI / 2 : -Math.PI / 2;
             const diff = ((targetDirection - windDirection + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
 
-            // inertia proportional to scroll speed
-            const inertiaFactor = 0.002 + Math.min(Math.abs(scrollDelta) * 0.0015, 0.05);
+            const inertiaFactor = CONFIG.PARALLAX_MIN_DELTA + Math.min(Math.abs(scrollDelta) * CONFIG.PARALLAX_SPEED, 0.05);
             windDirection += diff * inertiaFactor;
         }
         lastScrollY = scrollY;
@@ -288,8 +351,8 @@ export function initSkyOverlay() {
             const parallaxY = (scrollY / window.innerHeight) * 0.5;
 
             const cloudSpeed = cloud.speed * cloud.speedFactor;
-            cloud.x += Math.cos(windDirection) * cloudSpeed * windSpeed;
-            cloud.y += Math.sin(windDirection) * cloudSpeed * windSpeed + cloud.drift + parallaxY;
+            cloud.x += Math.cos(windDirection) * cloudSpeed * CONFIG.WIND_SPEED;
+            cloud.y += Math.sin(windDirection) * cloudSpeed * CONFIG.WIND_SPEED + cloud.drift + parallaxY;
             cloud.rotation += cloud.rotationSpeed;
 
             // grow cloud
@@ -321,7 +384,7 @@ export function initSkyOverlay() {
 
     function initClouds() {
         clouds.length = 0;
-        for (let i = 0; i < maxClouds; i++) clouds.push(createCloud(false));
+        for (let i = 0; i < CONFIG.MAX_CLOUDS; i++) clouds.push(createCloud(false));
     }
 
     handleResize();
@@ -330,3 +393,4 @@ export function initSkyOverlay() {
 
     animate();
 }
+
