@@ -1,5 +1,5 @@
-import { initSpaceBackground, initSkyBackground } from "./background/background.js";
-import { initSpaceOverlay, initSkyOverlay } from "./background/overlay.js";
+import { initSkyBackground } from "./background/background.js";
+import { initSpaceOverlay, initCloudOverlay as initCloudOverlay } from "./background/overlay.js";
 import { renderProjects } from "./data/projects.js";
 import { setupForm } from "./data/contact.js";
 
@@ -46,12 +46,14 @@ function init() {
     // Initialize background/overlay based on theme
     if (colorScheme === "dark") {
         document.getElementById('dark').style.display = 'block';
-        initSpaceBackground();
+        document.getElementById('space').style.display = 'block';
         initSpaceOverlay();
     } else {
         document.getElementById('light').style.display = 'block';
+        document.getElementById('sky').style.display = 'block';
+        document.getElementById('clouds').style.display = 'block';
         initSkyBackground();
-        initSkyOverlay();
+        initCloudOverlay();
     }
 
     // Build page structure

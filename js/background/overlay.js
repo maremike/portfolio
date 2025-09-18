@@ -1,10 +1,5 @@
-function getScaleFactor() {
-    const BASE_WIDTH = 1920;
-    const BASE_HEIGHT = 1080;
-    const screenArea = window.innerWidth * window.innerHeight;
-    const baseArea = BASE_WIDTH * BASE_HEIGHT;
-    return Math.sqrt(screenArea / baseArea); // sqrt keeps scaling moderate
-}
+import { getScaleFactor } from "../utility/view.js";
+import { getTimeFactor } from "../utility/time.js";
 
 export function initSpaceOverlay() {
     const scale = getScaleFactor();
@@ -43,7 +38,7 @@ export function initSpaceOverlay() {
         PARALLAX_STRENGTH: 0.5 / scale // larger screens = faster parallax
     };
 
-    const canvas = document.getElementById("dark");
+    const canvas = document.getElementById("space");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
@@ -222,7 +217,7 @@ export function initSpaceOverlay() {
     animate();
 }
 
-export function initSkyOverlay() {
+export function initCloudOverlay() {
     const scale = getScaleFactor();
 
     const CONFIG = {
@@ -246,10 +241,13 @@ export function initSkyOverlay() {
 
         // Parallax
         PARALLAX_MIN_DELTA: 0.0003,
-        PARALLAX_SPEED: 0.0003 * scale
+        PARALLAX_SPEED: 0.0003 * scale,
+
+        // Gradient
+        GRADIENT_STRETCH_FACTOR: 1000
     };
 
-    const canvas = document.getElementById('light');
+    const canvas = document.getElementById('clouds');
     const ctx = canvas.getContext('2d');
 
     const clouds = [];
@@ -292,12 +290,13 @@ export function initSkyOverlay() {
 
         return {
             x, y, size, opacity,
+            baseColor: { r: 240, g: 240, b: 240, a: 0.4 }, // <-- add base color
             speed: 0.3 + Math.random() * 0.5,
             speedFactor: 0.8 + Math.random() * 0.4,
             drift: (Math.random() - 0.5) * 0.1,
             rotation: Math.random() * Math.PI * 2,
             rotationSpeed: (Math.random() - 0.5) * CONFIG.ROTATION_FACTOR *
-                           (1 - CONFIG.ROTATION_VARIANCE + Math.random() * CONFIG.ROTATION_VARIANCE * 2),
+                        (1 - CONFIG.ROTATION_VARIANCE + Math.random() * CONFIG.ROTATION_VARIANCE * 2),
             growthRate: 0.02 + Math.random() * 0.03,
             puffs
         };
@@ -306,7 +305,7 @@ export function initSkyOverlay() {
     function drawCloud(cloud) {
         ctx.save();
         ctx.globalAlpha = cloud.opacity;
-        ctx.fillStyle = CONFIG.CLOUD_COLOR;
+        ctx.fillStyle = getCloudColor(cloud.baseColor);
 
         ctx.translate(cloud.x, cloud.y);
         ctx.rotate(cloud.rotation);
@@ -338,6 +337,48 @@ export function initSkyOverlay() {
             windDirection += diff * inertiaFactor;
         }
         lastScrollY = scrollY;
+    }
+
+    const cloudSegments = [
+        { color: 'rgba(50, 90, 180, 1)', weight: 6 },    // night
+        { color: 'rgba(255, 216, 180, 1)', weight: 3 },  // sunrise
+        { color: 'rgba(217, 234, 255, 1)', weight: 3 },  // morning
+        { color: 'rgba(255, 255, 255, 1)', weight: 3 },   // noon
+        { color: 'rgba(217, 234, 255, 1)', weight: 3 },  // afternoon
+        { color: 'rgba(255, 216, 180, 1)', weight: 3 },  // sunset
+        { color: 'rgba(50, 90, 180, 1)', weight: 3 }      // night
+    ];
+
+    function getCloudColor() {
+        const t = getTimeFactor(); // 0..1 over the day
+        const totalWeight = cloudSegments.reduce((sum, seg) => sum + seg.weight, 0);
+        let cumulative = 0;
+
+        // Determine which segment t falls into
+        for (let i = 0; i < cloudSegments.length; i++) {
+            const seg = cloudSegments[i];
+            const start = cumulative / totalWeight;
+            cumulative += seg.weight;
+            const end = cumulative / totalWeight;
+
+            if (t >= start && t <= end) {
+                // Interpolate color between this segment and the next
+                const nextSeg = cloudSegments[(i + 1) % cloudSegments.length];
+                const localT = (t - start) / (end - start);
+
+                const colorA = seg.color.match(/\d+/g).map(Number);
+                const colorB = nextSeg.color.match(/\d+/g).map(Number);
+
+                const r = Math.floor(colorA[0] + (colorB[0] - colorA[0]) * localT);
+                const g = Math.floor(colorA[1] + (colorB[1] - colorA[1]) * localT);
+                const b = Math.floor(colorA[2] + (colorB[2] - colorA[2]) * localT);
+
+                return `rgb(${r},${g},${b})`;
+            }
+        }
+
+        // Fallback in case t somehow falls outside
+        return cloudSegments[0].color;
     }
 
     function animate() {
@@ -393,4 +434,3 @@ export function initSkyOverlay() {
 
     animate();
 }
-
