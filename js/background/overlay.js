@@ -11,24 +11,24 @@ export function initSpaceOverlay() {
 
     const CONFIG = {
         // Stars
-        NUM_STARS: Math.floor(250 * scale * scale), // quadratic scaling for density
+        NUM_STARS: Math.floor(1000 * scale * scale), // quadratic scaling for density
         STAR_COLORS: ["#ffffff", "#ffe9c4", "#c4e1ff", "#ffb6c1"],
         STAR_BRIGHTNESS: 1.0,
-        STAR_ROAMING: 0.3 * scale,
+        STAR_ROAMING: 0.15 * scale,
         STAR_FADE_SPEED: 0.02,
-        STAR_3D_DEPTH_MIN: 0.2,
-        STAR_3D_DEPTH_MAX: 1.5,
+        STAR_3D_DEPTH_MIN: 0.005,
+        STAR_3D_DEPTH_MAX: 0.5,
 
         // Nebulas
-        NUM_NEBULAS: Math.max(2, Math.floor(3 * scale)),
-        NUM_BLOBS: Math.max(3, Math.floor(3 * scale)),
-        NEBULA_SPREAD_X: 600 * scale,
-        NEBULA_SPREAD_Y: 700 * scale,
-        NEBULA_BASE_RADIUS: 100 * scale,
-        NEBULA_RADIUS_VARIANCE: 675 * scale,
+        NUM_NEBULAS: Math.max(2, Math.floor(2 * scale)),
+        NUM_BLOBS: Math.max(3, Math.floor(2 * scale)),
+        NEBULA_SPREAD_X: 1000 * scale,
+        NEBULA_SPREAD_Y: 1200 * scale,
+        NEBULA_BASE_RADIUS: 800 * scale,
+        NEBULA_RADIUS_VARIANCE: 100 * scale,
 
         // Meteors
-        METEOR_CHANCE_IDLE: 0.03,
+        METEOR_CHANCE_IDLE: 0.012,
         METEOR_CHANCE_SCROLL: 0.1,
         METEOR_BRIGHTNESS: 1.0,
         METEOR_MIN_LENGTH: 50 * scale,
@@ -37,9 +37,9 @@ export function initSpaceOverlay() {
         METEOR_MAX_SPEED: 10 * scale,
 
         // Warp & Parallax
-        MAX_WARP: 10 * scale,
+        MAX_WARP: 200 * scale,
         SCROLL_MIN_DELTA: 30,
-        WARP_LERP_SPEED: 0.08,
+        WARP_LERP_SPEED: 0.14,
         PARALLAX_STRENGTH: 0.5 / scale // larger screens = faster parallax
     };
 
@@ -226,10 +226,10 @@ export function initSkyOverlay() {
     const scale = getScaleFactor();
 
     const CONFIG = {
-        MAX_CLOUDS: Math.floor(50 * scale * scale), // more clouds on bigger screens
+        MAX_CLOUDS: Math.floor(180 * scale * scale), // more clouds on bigger screens
 
         // Wind
-        WIND_SPEED: 1.3 * scale,
+        WIND_SPEED: 2.3 * scale,
         WIND_DIRECTION_CHANGE_PROB: 0.01,
         WIND_DIRECTION_CHANGE_DEGREES: 2,
 
@@ -238,15 +238,15 @@ export function initSkyOverlay() {
         ROTATION_VARIANCE: 0.5,
 
         // Clouds
-        BASE_CLOUD_SIZE: 60 * scale,
-        SIZE_VARIANCE: 30 * scale,
+        BASE_CLOUD_SIZE: 100 * scale,
+        SIZE_VARIANCE: 60 * scale,
         CLOUD_COLOR: "#f0f0f0",
-        BASE_OPACITY: 0.5,
-        OPACITY_VARIANCE: 0.3,
+        BASE_OPACITY: 0.4,
+        OPACITY_VARIANCE: 0.4,
 
         // Parallax
-        PARALLAX_MIN_DELTA: 0.002,
-        PARALLAX_SPEED: 0.0015 * scale
+        PARALLAX_MIN_DELTA: 0.0003,
+        PARALLAX_SPEED: 0.0003 * scale
     };
 
     const canvas = document.getElementById('light');
