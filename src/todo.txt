@@ -3,12 +3,17 @@
 - Add Icons
 - Add Captcha for contacting
 - Implement contact logic
-- Add different Languages
+- Add different Languages (via /de /en /sp /ru /ch /it /fr)
 - Add Myspace/like with techno Page dimden.dev
 - Check out other websites
 - KISS
 - Dark Mode - rocket | light mode airplane
 - Consider industrial design (good for light/dark mode)
+- Make it look scrollable (put something behind bounds but visible)
+- horizontal scroll via vertical scroll for plane/rocket
+- Keep it accessible
+- PDF resume link
+- Add camelcase
 
 - Timeline with experience(internships)/projects/education (add pictures switching to timeline showcasing the home location with a marker showing the location)
 - List of Projects
