@@ -1,5 +1,5 @@
-import { initSkyBackground } from "./background/background.js";
-import { initSpaceOverlay, initCloudOverlay as initCloudOverlay } from "./background/overlay.js";
+import { initSkyBackground, initCloudOverlay } from "./background/sky.js";
+import { initSpaceOverlay } from "./background/space.js";
 import { renderProjects } from "./data/projects.js";
 import { setupForm } from "./data/contact.js";
 

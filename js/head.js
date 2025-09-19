@@ -1,5 +1,5 @@
-import { initSkyBackground, removeSkyBackground } from "./background/background.js";
-import { initSpaceOverlay, removeSpaceOverlay, initCloudOverlay, removeCloudOverlay } from "./background/overlay.js";
+import { initSkyBackground, removeSkyBackground, initCloudOverlay, removeCloudOverlay } from "./background/sky.js";
+import { initSpaceOverlay, removeSpaceOverlay } from "./background/space.js";
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme; // make it mutable
