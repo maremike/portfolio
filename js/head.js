@@ -38,6 +38,7 @@ export function createHeader(initialColorScheme) {
     toggleBtn.addEventListener("click", () => {
         if (colorScheme === "dark") {
             colorScheme = "light";
+            document.documentElement.setAttribute('data-theme','light');
             toggleBtn.textContent = "☀️";
 
             removeSpaceOverlay();
@@ -50,6 +51,7 @@ export function createHeader(initialColorScheme) {
             initCloudOverlay();
         } else {
             colorScheme = "dark";
+            document.documentElement.setAttribute('data-theme','dark');
             toggleBtn.textContent = "🌙";
 
             removeSkyBackground();

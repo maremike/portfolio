@@ -1,23 +1,99 @@
-* {
-  box-sizing: border-box;
+/* -------------------------
+   Theme tokens + fallbacks
+   ------------------------- */
+:root{
+  /* Light theme defaults */
+  --bg: #ffffff;
+  --text: #121212;
+  --muted: #777777;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+
+  /* overlay opacities */
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
 }
+
+/* Respect system preference if JS hasn't set data-theme */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme]) {
+    --bg: #121212;
+    --text: #f0f0f0;
+    --muted: #9a9a9a;
+    --header-bg: #1f1f1f;
+    --card-bg: #222222;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    --accent: #00bcd4;
+    --button-bg: var(--accent);
+    --button-text: #121212;
+    --bg-layer-opacity: 1;
+    --overlay-opacity: 1;
+  }
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme]) {
+    /* nothing — defaults above already light */
+  }
+}
+
+/* Explicit themes via JS (document.documentElement.setAttribute('data-theme','dark') ) */
+:root[data-theme="dark"]{
+  --bg: #121212;
+  --text: #f0f0f0;
+  --muted: #9a9a9a;
+  --header-bg: #1f1f1f;
+  --card-bg: #222222;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
+}
+
+:root[data-theme="light"]{
+  --bg: #ffffff;
+  --text: #121212;
+  --muted: #777777;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
+}
+
+/* -------------------------
+   Base and layout
+   ------------------------- */
+* { box-sizing: border-box; }
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: var(--bg);
+  color: var(--text);
   line-height: 1.6;
+  transition: background-color 240ms ease, color 240ms ease;
 }
 
+/* header */
 header {
-  background-color: #1f1f1f;
+  background-color: var(--header-bg);
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background-color 240ms ease, color 240ms ease;
 }
 
+/* nav */
 .nav-list {
   list-style: none;
   display: flex;
@@ -29,15 +105,16 @@ header {
 
 .nav-list a {
   text-decoration: none;
-  color: #f0f0f0;
+  color: var(--text);
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .nav-list a:hover {
-  color: #00bcd4;
+  color: var(--accent);
 }
 
+/* sections */
 .section {
   padding: 3rem 1rem;
   max-width: 900px;
@@ -45,9 +122,10 @@ header {
 }
 
 h1, h2 {
-  color: #00bcd4;
+  color: var(--accent);
 }
 
+/* forms */
 form {
   display: flex;
   flex-direction: column;
@@ -61,104 +139,87 @@ input, textarea {
   border-radius: 4px;
   font-size: 1rem;
   resize: vertical;
+  background: color-mix(in srgb, var(--card-bg) 96%, transparent);
+  color: var(--text);
 }
 
+/* buttons */
 button {
-  background-color: #00bcd4;
-  color: #121212;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border: none;
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 120ms ease;
 }
 
-button:hover {
-  background-color: #0097a7;
-}
+button:hover { background-color: color-mix(in srgb, var(--button-bg) 85%, black 15%); transform: translateY(-1px); }
 
+/* footer */
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #1f1f1f;
+  background-color: var(--header-bg);
   margin-top: 2rem;
   font-size: 0.9rem;
-  color: #777;
+  color: var(--muted);
 }
 
+/* project cards */
 .project-card {
-  background-color: #222;
+  background-color: var(--card-bg);
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  box-shadow: var(--card-shadow);
+  color: var(--text);
 }
 
-.project-card h3 {
-  margin-top: 0;
-  color: #00bcd4;
-}
+.project-card h3 { margin-top: 0; color: var(--accent); }
+.project-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.project-card a:hover { text-decoration: underline; }
 
-.project-card a {
-  color: #00bcd4;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.project-card a:hover {
-  text-decoration: underline;
-}
-
-#dark {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: -3; /* behind everything */
-  background: #000000;
-}
-
+/* -------------------------
+   Background layers (sky/light/dark/overlays)
+   ------------------------- */
+/* base layer elements */
+#dark,
 #light {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: block;
   z-index: -3; /* behind everything */
-  background: #ffffff;
+  display: block;
+  pointer-events: none;
+  transition: opacity 360ms ease, visibility 360ms ease;
+  opacity: 0;
+  visibility: hidden;
 }
 
-#sky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2; /* background */
-  pointer-events: none;
+/* Slightly higher layering for gradient sky vs color block */
+#sky { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
+#clouds { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
+#space { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
+
+/* Show/hide based on data-theme attribute */
+:root[data-theme="dark"] #dark { opacity: var(--bg-layer-opacity); visibility: visible; }
+:root[data-theme="dark"] #space { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="dark"] #light, :root[data-theme="dark"] #sky, :root[data-theme="dark"] #clouds { opacity: 0; visibility: hidden; }
+
+:root[data-theme="light"] #light { opacity: var(--bg-layer-opacity); visibility: visible; }
+:root[data-theme="light"] #sky { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="light"] #clouds { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="light"] #dark, :root[data-theme="light"] #space { opacity: 0; visibility: hidden; }
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  * { transition: none !important; animation: none !important; }
 }
 
-#clouds {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* above sky but below content */
-  pointer-events: none;
-}
-
-#space {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* above sky but below content */
-  pointer-events: none;
-}
+/* Utility: keep canvases full-size */
+#light, #dark, #sky, #clouds, #space { image-rendering: optimizeQuality; }

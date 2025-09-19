@@ -1,11 +1,12 @@
 - Add Logo
 - Add Picture
 - Add Icons
-- Clouds: Sunrise (Black/Orange/Blue), Day (Blue), Sunset (Sunrise)
 - Add Captcha for contacting
-- Remove elements from light/dark mode before switching mode
 - Implement contact logic
-- Backgroudn ideas: Neuron network, World map, moon surface, Soft Bokeh Effect, Aurora Effect, Soft Floating Balloons/kites, Light Flares/glows
+- Add different Languages
+- Add Myspace/like with techno Page dimden.dev
+- Check out other websites
+- KISS
 
 - Timeline with experience(internships)/projects/education (add pictures switching to timeline showcasing the home location with a marker showing the location)
 - List of Projects

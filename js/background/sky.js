@@ -234,9 +234,9 @@ export function initCloudOverlay() {
     const cloudSegments = [
         { color: 'rgba(50, 90, 180, 1)', weight: 6 },
         { color: 'rgba(255, 216, 180, 1)', weight: 3 },
-        { color: 'rgba(217, 234, 255, 1)', weight: 3 },
+        { color: 'rgba(233, 243, 255, 1)', weight: 3 },
         { color: 'rgba(255, 255, 255, 1)', weight: 3 },
-        { color: 'rgba(217, 234, 255, 1)', weight: 3 },
+        { color: 'rgba(233, 243, 255, 1)', weight: 3 },
         { color: 'rgba(255, 216, 180, 1)', weight: 3 },
         { color: 'rgba(50, 90, 180, 1)', weight: 3 }
     ];
