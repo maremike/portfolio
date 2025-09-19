@@ -1,49 +1,20 @@
 import { initSkyBackground, initCloudOverlay } from "./background/sky.js";
 import { initSpaceOverlay } from "./background/space.js";
-import { renderProjects } from "./data/projects.js";
-import { setupForm } from "./data/contact.js";
-
+import { checkColorScheme, setupColorSchemeListener } from "./utility/themes.js";
 import { createHeader } from "./head.js";
-import { createBody } from "./body.js";
 import { createFooter } from "./foot.js";
 
-// --- COLOR SCHEME FUNCTIONS ---
-function checkColorScheme() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.documentElement.classList.add('dark-mode');
-        document.documentElement.classList.remove('light-mode');
-        return 'dark';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        document.documentElement.classList.add('light-mode');
-        document.documentElement.classList.remove('dark-mode');
-        return 'light';
-    }
-}
+import { renderStartpage } from "./pages/startpage.js";
+import { renderProjects } from "./pages/projects.js";
+import { renderProducts } from "./pages/products.js";
+import { renderContact } from "./pages/contact.js";
+import { renderMyspace } from "./pages/myspace.js";
+import { render404 } from "./pages/404.js";
 
-function setupColorSchemeListener() {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', (e) => {
-        if (e.matches) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            document.documentElement.classList.add('dark-mode');
-            document.documentElement.classList.remove('light-mode');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            document.documentElement.classList.add('light-mode');
-            document.documentElement.classList.remove('dark-mode');
-        }
-    });
-}
 
-// --- INIT FUNCTION ---
-function init() {
-    // Initialize theme
+function initBackground() {
     const colorScheme = checkColorScheme();
     setupColorSchemeListener();
-
-    // Initialize background/overlay based on theme
     if (colorScheme === "dark") {
         document.getElementById('dark').style.display = 'block';
         document.getElementById('space').style.display = 'block';
@@ -55,15 +26,44 @@ function init() {
         initSkyBackground();
         initCloudOverlay();
     }
+    return colorScheme;
+}
+
+function router() {
+    const app = document.getElementById("app");
+    app.innerHTML = ""; // clear content before rendering a new page
+
+    const path = window.location.hash.slice(1) || "/"; // remove "#" from URL
+
+    switch (path) {
+        case "/":
+            renderStartpage(app);
+            break;
+        case "/products":
+            renderProducts(app);
+            break;
+        case "/projects":
+            renderProjects(app);
+            break;
+        case "/contact":
+            renderContact(app);
+            break;
+        case "/myspace":
+            renderMyspace(app);
+            break;
+        default:
+            render404(app);
+            break;
+    }
+}
+
+function init() {
+    // Setup Background
+    initBackground(); // TODO: Outsource to each page in near future
 
     // Build page structure
-    createHeader(colorScheme);
-    createBody();
-    createFooter();
-
-    // Render content
-    renderProjects();
-    setupForm();
+    router();
+    window.addEventListener("hashchange", router); // Handle route changes
 }
 
 document.addEventListener('DOMContentLoaded', init);
