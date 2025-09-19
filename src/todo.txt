@@ -7,6 +7,8 @@
 - Add Myspace/like with techno Page dimden.dev
 - Check out other websites
 - KISS
+- Dark Mode - rocket | light mode airplane
+- Consider industrial design (good for light/dark mode)
 
 - Timeline with experience(internships)/projects/education (add pictures switching to timeline showcasing the home location with a marker showing the location)
 - List of Projects
