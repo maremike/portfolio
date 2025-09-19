@@ -1,5 +1,5 @@
-import { initSkyBackground, removeSkyBackground, initCloudOverlay, removeCloudOverlay } from "./background/sky.js";
-import { initSpaceOverlay, removeSpaceOverlay } from "./background/space.js";
+import { initSkyBackground, initCloudOverlay } from "./background/sky.js";
+import { initSpaceOverlay } from "./background/space.js";
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme; // make it mutable
@@ -41,7 +41,6 @@ export function createHeader(initialColorScheme) {
             document.documentElement.setAttribute('data-theme','light');
             toggleBtn.textContent = "☀️";
 
-            removeSpaceOverlay();
             document.getElementById('dark').style.display = 'none';
             document.getElementById('space').style.display = 'none';
             document.getElementById('light').style.display = 'block';
@@ -54,8 +53,6 @@ export function createHeader(initialColorScheme) {
             document.documentElement.setAttribute('data-theme','dark');
             toggleBtn.textContent = "🌙";
 
-            removeSkyBackground();
-            removeCloudOverlay();
             document.getElementById('light').style.display = 'none';
             document.getElementById('sky').style.display = 'none';
             document.getElementById('clouds').style.display = 'none';
