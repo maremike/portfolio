@@ -75,3 +75,14 @@ export function initSkyBackground() {
 
     animateSky();
 }
+
+export function removeSkyBackground() {
+    if (!skyOverlay.canvas) return;
+
+    cancelAnimationFrame(skyOverlay.animationId);
+    window.removeEventListener("resize", skyOverlay.resizeHandler);
+
+    skyOverlay.ctx.clearRect(0, 0, skyOverlay.canvas.width, skyOverlay.canvas.height);
+
+    skyOverlay = { canvas: null, ctx: null, animationId: null, resizeHandler: null };
+}

@@ -17,7 +17,6 @@ export function getTimeFactor(timeZone = "Europe/Berlin") {
     });
 
     const timeFactor = (hour + minute / 60) / 24;
-    console.log(timeFactor)
     return timeFactor;
     // Mapping of hours to factor:
     //  0:00 → 0 / 24 = 0
