@@ -63,8 +63,6 @@ export function createHeader(initialColorScheme) {
             toggleBtn.textContent = "🌙";
             await switchToDarkMode();
         }
-        
-        render(window.location.pathname);
 
         isSwitching = false;
     });
