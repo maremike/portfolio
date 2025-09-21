@@ -1,7 +1,7 @@
 import {switchToDarkMode, switchToLightMode} from "./utility/themes.js"
 
 export function createHeader(initialColorScheme) {
-    let colorScheme = initialColorScheme; // make it mutable
+    let colorScheme = initialColorScheme;
 
     const header = document.createElement("header");
     const nav = document.createElement("nav");
