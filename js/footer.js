@@ -4,7 +4,7 @@ export function createFooter() {
 
     // --- Copyright paragraph ---
     const pCopyright = document.createElement("p");
-    pCopyright.textContent = "© 2025 Max Mustermann";
+    pCopyright.textContent = "© 2025 Michael Markov";
     footer.appendChild(pCopyright);
 
     // --- Links paragraph ---
