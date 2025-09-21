@@ -10,9 +10,9 @@ export function createHeader(initialColorScheme) {
 
     const navItems = [
         { image: "src/image.png", href: "/" },
-        { text: "Products", href: "/products.html" },
-        { text: "Projects", href: "/projects.html" },
-        { text: "Contact", href: "/contact.html" }
+        { text: "Products", href: "/products" },
+        { text: "Projects", href: "/projects" },
+        { text: "Contact", href: "/contact" }
     ];
 
     navItems.forEach(item => {

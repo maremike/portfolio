@@ -9,13 +9,13 @@ import { renderPrivacyPage } from "./pages/privacy.js";
 
 const routes = {
   "/": renderStartpagePage,
-  "/index.html": renderStartpagePage,
-  "/products.html": renderProductsPage,
-  "/projects.html": renderProjectsPage,
-  "/contact.html": renderContactPage,
-  "/myspace.html": renderMyspacePage,
-  "/about.html": renderAboutPage,
-  "/privacy.html": renderPrivacyPage,
+  "/index": renderStartpagePage,
+  "/products": renderProductsPage,
+  "/projects": renderProjectsPage,
+  "/contact": renderContactPage,
+  "/myspace": renderMyspacePage,
+  "/about": renderAboutPage,
+  "/privacy": renderPrivacyPage,
   "/404": render404Page
 };
 
@@ -47,12 +47,19 @@ function render(path) {
   const main = document.querySelector("main");
   main.innerHTML = "";
 
-  const contentFn = routes[path] || render404Page;
+  // Try path as-is, then as .html, then fallback to 404
+  let contentFn = routes[path] || routes[path.replace(/\.html$/, "")] || render404Page;
+
   const content = contentFn();
 
   if (typeof content === "string") {
     main.innerHTML = content;
   } else {
     main.appendChild(content);
+  }
+
+  // Optional: update the URL for 404 page
+  if (contentFn === render404Page && window.location.pathname !== "/404") {
+    history.replaceState({}, "", "/404");
   }
 }

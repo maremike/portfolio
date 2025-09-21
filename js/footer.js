@@ -11,8 +11,8 @@ export function createFooter() {
     const pLinks = document.createElement("p");
 
     const links = [
-        { text: "About", href: "/about.html" },
-        { text: "Privacy", href: "/privacy.html" }
+        { text: "About", href: "/about" },
+        { text: "Privacy", href: "/privacy" }
     ];
 
     links.forEach((link, index) => {
