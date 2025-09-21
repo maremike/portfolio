@@ -15,7 +15,7 @@ export function renderSignaturePage() {
         </tr>
         <tr>
             <td colspan="2" style="padding: 2px 0;">
-                <em style="font-family: Arial; font-size: 14px; color: #464646;">Student - Informatik: Software- und Systemtechnik - Hochschule Bremen</em>
+                <em style="font-family: Arial; font-size: 14px; color: #464646;">Student — Informatik: Software- und Systemtechnik — Hochschule Bremen</em>
             </td>
         </tr>
         <!-- Horizontal line with reduced margin -->
@@ -26,7 +26,7 @@ export function renderSignaturePage() {
         </tr>
         <!-- Contact information with updated icons -->
         <tr>
-            <td style="padding: 0; vertical-align: middle; width: 20px;">
+            <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
                 <img src="https://www.michael.markov.uk/src/icons/phone.svg" alt="phone" width="20" height="20" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
@@ -34,7 +34,7 @@ export function renderSignaturePage() {
             </td>
         </tr>
         <tr>
-            <td style="padding: 0; vertical-align: middle; width: 20px;">
+            <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
                 <img src="https://www.michael.markov.uk/src/icons/mail.svg" alt="mail" width="18" height="18" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
@@ -42,13 +42,13 @@ export function renderSignaturePage() {
             </td>
         </tr>
         <tr>
-            <td style="padding: 0; vertical-align: middle; width: 20px;">
+            <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
                 <img src="https://www.michael.markov.uk/src/icons/location.svg" alt="location" width="20" height="20" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle; color: #000000; font-size: 12px;">Steinkamp 10i, 28717 Bremen, Germany</td>
         </tr>
         <tr>
-            <td style="padding: 0; vertical-align: middle; width: 20px;">
+            <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
                 <img src="https://www.michael.markov.uk/src/icons/globe.svg" alt="mail" width="18" height="18" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
