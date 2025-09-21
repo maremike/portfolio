@@ -47,8 +47,13 @@ function render(path) {
   const main = document.querySelector("main");
   main.innerHTML = "";
 
-  // Try path as-is, then as .html, then fallback to 404
-  let contentFn = routes[path] || routes[path.replace(/\.html$/, "")] || render404Page;
+  // Try the exact path first, then fallback to 404
+  let contentFn = routes[path] || render404Page;
+
+  // If showing 404, update the address bar
+  if (contentFn === render404Page && window.location.pathname !== "/404") {
+    history.replaceState({}, "", "/404");
+  }
 
   const content = contentFn();
 
@@ -56,10 +61,5 @@ function render(path) {
     main.innerHTML = content;
   } else {
     main.appendChild(content);
-  }
-
-  // Optional: update the URL for 404 page
-  if (contentFn === render404Page && window.location.pathname !== "/404") {
-    history.replaceState({}, "", "/404");
   }
 }
