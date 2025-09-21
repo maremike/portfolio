@@ -1,7 +1,9 @@
 import { checkColorScheme } from "../utility/themes.js";
 
 export function renderSignaturePage() {
+    const section = document.createElement("section");
     section.className = "section";
+
     let colorSheme = checkColorScheme(); 
 
     if (colorSheme === "dark") {
