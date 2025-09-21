@@ -1,0 +1,57 @@
+#dark,
+#light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  display: block;
+  pointer-events: none;
+  transition: opacity 360ms ease, visibility 360ms ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#sky {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-2;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
+
+#clouds {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
+
+#space {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
+
+/* Theme-dependent backgrounds */
+:root[data-theme="dark"] #dark { opacity: var(--bg-layer-opacity); visibility: visible; }
+:root[data-theme="dark"] #space { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="dark"] #light,
+:root[data-theme="dark"] #sky,
+:root[data-theme="dark"] #clouds { opacity: 0; visibility: hidden; }
+
+:root[data-theme="light"] #light { opacity: var(--bg-layer-opacity); visibility: visible; }
+:root[data-theme="light"] #sky { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="light"] #clouds { opacity: var(--overlay-opacity); visibility: visible; }
+:root[data-theme="light"] #dark,
+:root[data-theme="light"] #space { opacity: 0; visibility: hidden; }

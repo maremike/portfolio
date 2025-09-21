@@ -1,0 +1,9 @@
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Utility */
+#light, #dark, #sky, #clouds, #space {
+  image-rendering: optimizeQuality;
+}

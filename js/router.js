@@ -7,6 +7,7 @@ import { renderMyspacePage } from "./pages/myspace.js";
 import { renderAboutPage } from "./pages/about.js";
 import { renderPrivacyPage } from "./pages/privacy.js";
 import { renderSignaturePage } from "./pages/signature.js";
+import { renderTosPage } from "./pages/tos.js";
 
 const routes = {
   "/": renderStartpagePage,
@@ -18,6 +19,7 @@ const routes = {
   "/about": renderAboutPage,
   "/privacy": renderPrivacyPage,
   "/signature": renderSignaturePage,
+  "/tos": renderTosPage,
   "/404": render404Page
 };
 

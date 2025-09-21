@@ -6,7 +6,7 @@ export function renderStartpagePage() {
   heading.textContent = "Über mich";
 
   const paragraph = document.createElement("p");
-  paragraph.textContent = "Hallo, ich bin Michael Markov. Willkommen auf meiner Portfolio-Seite!";
+  paragraph.textContent = "Hallo, ich bin Michael Markov. Willkommen auf meiner Seite!";
 
   section.appendChild(heading);
   section.appendChild(paragraph);
