@@ -1,4 +1,3 @@
-export function render404(app) {
-    app.innerHTML = ""; // clear content before rendering a new page
+export function render404Page() {
     
 }

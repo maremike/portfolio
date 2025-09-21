@@ -1,5 +1,4 @@
-import { initSkyBackground, initCloudOverlay } from "./background/sky.js";
-import { initSpaceOverlay } from "./background/space.js";
+import {switchToDarkMode, switchToLightMode} from "./utility/themes.js"
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme; // make it mutable
@@ -10,16 +9,31 @@ export function createHeader(initialColorScheme) {
     ul.className = "nav-list";
 
     const navItems = [
-        { text: "Über mich", href: "#about" },
-        { text: "Projekte", href: "#projects" },
-        { text: "Kontakt", href: "#contact" }
+        { image: "src/image.png", href: "/" },
+        { text: "Products", href: "/products.html" },
+        { text: "Projects", href: "/projects.html" },
+        { text: "Contact", href: "/contact.html" }
     ];
 
     navItems.forEach(item => {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = item.href;
-        a.textContent = item.text;
+
+        // If item has an image, create an <img> inside the link
+        if (item.image) {
+            const img = document.createElement("img");
+            img.src = item.image;
+            img.alt = "Logo";        // accessibility
+            img.style.height = "40px"; // adjust as needed
+            a.appendChild(img);
+        }
+
+        // If item has text, add it
+        if (item.text) {
+            a.appendChild(document.createTextNode(item.text));
+        }
+
         li.appendChild(a);
         ul.appendChild(li);
     });
@@ -35,31 +49,22 @@ export function createHeader(initialColorScheme) {
 
     toggleBtn.textContent = colorScheme === "dark" ? "🌙" : "☀️";
 
-    toggleBtn.addEventListener("click", () => {
+    let isSwitching = false;
+    toggleBtn.addEventListener("click", async () => {
+        if (isSwitching) return;
+        isSwitching = true;
+
         if (colorScheme === "dark") {
             colorScheme = "light";
-            document.documentElement.setAttribute('data-theme','light');
             toggleBtn.textContent = "☀️";
-
-            document.getElementById('dark').style.display = 'none';
-            document.getElementById('space').style.display = 'none';
-            document.getElementById('light').style.display = 'block';
-            document.getElementById('sky').style.display = 'block';
-            document.getElementById('clouds').style.display = 'block';
-            initSkyBackground();
-            initCloudOverlay();
+            await switchToLightMode();
         } else {
             colorScheme = "dark";
-            document.documentElement.setAttribute('data-theme','dark');
             toggleBtn.textContent = "🌙";
-
-            document.getElementById('light').style.display = 'none';
-            document.getElementById('sky').style.display = 'none';
-            document.getElementById('clouds').style.display = 'none';
-            document.getElementById('dark').style.display = 'block';
-            document.getElementById('space').style.display = 'block';
-            initSpaceOverlay();
+            await switchToDarkMode();
         }
+
+        isSwitching = false;
     });
 
     // --- Flex container for nav + toggle ---

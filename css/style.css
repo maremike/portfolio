@@ -40,7 +40,7 @@
   }
 }
 
-/* Explicit themes via JS (document.documentElement.setAttribute('data-theme','dark') ) */
+/* Explicit themes via JS */
 :root[data-theme="dark"]{
   --bg: #121212;
   --text: #f0f0f0;
@@ -74,6 +74,10 @@
    ------------------------- */
 * { box-sizing: border-box; }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -81,6 +85,13 @@ body {
   color: var(--text);
   line-height: 1.6;
   transition: background-color 240ms ease, color 240ms ease;
+
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* pushes footer to the bottom */
 }
 
 /* header */
@@ -156,14 +167,16 @@ button {
   transition: background-color 0.3s ease, transform 120ms ease;
 }
 
-button:hover { background-color: color-mix(in srgb, var(--button-bg) 85%, black 15%); transform: translateY(-1px); }
+button:hover {
+  background-color: color-mix(in srgb, var(--button-bg) 85%, black 15%);
+  transform: translateY(-1px);
+}
 
 /* footer */
 footer {
   text-align: center;
   padding: 1rem;
   background-color: var(--header-bg);
-  margin-top: 2rem;
   font-size: 0.9rem;
   color: var(--muted);
 }
@@ -183,9 +196,8 @@ footer {
 .project-card a:hover { text-decoration: underline; }
 
 /* -------------------------
-   Background layers (sky/light/dark/overlays)
+   Background layers
    ------------------------- */
-/* base layer elements */
 #dark,
 #light {
   position: fixed;
@@ -193,7 +205,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -3; /* behind everything */
+  z-index: -3;
   display: block;
   pointer-events: none;
   transition: opacity 360ms ease, visibility 360ms ease;
@@ -201,25 +213,55 @@ footer {
   visibility: hidden;
 }
 
-/* Slightly higher layering for gradient sky vs color block */
-#sky { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
-#clouds { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
-#space { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:0; visibility:hidden; transition: opacity 360ms ease; }
+#sky {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-2;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
 
-/* Show/hide based on data-theme attribute */
+#clouds {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
+
+#space {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:0; visibility:hidden;
+  transition: opacity 360ms ease;
+}
+
+/* Theme-dependent backgrounds */
 :root[data-theme="dark"] #dark { opacity: var(--bg-layer-opacity); visibility: visible; }
 :root[data-theme="dark"] #space { opacity: var(--overlay-opacity); visibility: visible; }
-:root[data-theme="dark"] #light, :root[data-theme="dark"] #sky, :root[data-theme="dark"] #clouds { opacity: 0; visibility: hidden; }
+:root[data-theme="dark"] #light,
+:root[data-theme="dark"] #sky,
+:root[data-theme="dark"] #clouds { opacity: 0; visibility: hidden; }
 
 :root[data-theme="light"] #light { opacity: var(--bg-layer-opacity); visibility: visible; }
 :root[data-theme="light"] #sky { opacity: var(--overlay-opacity); visibility: visible; }
 :root[data-theme="light"] #clouds { opacity: var(--overlay-opacity); visibility: visible; }
-:root[data-theme="light"] #dark, :root[data-theme="light"] #space { opacity: 0; visibility: hidden; }
+:root[data-theme="light"] #dark,
+:root[data-theme="light"] #space { opacity: 0; visibility: hidden; }
 
 /* Accessibility: reduce motion */
 @media (prefers-reduced-motion: reduce){
   * { transition: none !important; animation: none !important; }
 }
 
-/* Utility: keep canvases full-size */
-#light, #dark, #sky, #clouds, #space { image-rendering: optimizeQuality; }
+/* Utility */
+#light, #dark, #sky, #clouds, #space {
+  image-rendering: optimizeQuality;
+}
