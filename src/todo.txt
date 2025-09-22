@@ -26,3 +26,5 @@
 
 - Outsource src to cdn site
 - Add Support (Buy me a Coffee, Patreon, Ko-Fi, Paypal Business)
+
+- Add global method to check for mobile or make everything dynamic

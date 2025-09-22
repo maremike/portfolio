@@ -7,44 +7,55 @@ export function createFooter() {
     footer.style.color = "#333";
     footer.style.width = "100%";
 
-    // Create table
     footer.innerHTML = `
-        <table style="width: 100%; border-collapse: collapse; text-align: center;">
-            <tr>
-                <td style="text-align: left; vertical-align: top;">
-                    DEV
-                </td>
+        <div class="footer-top" style="
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 1rem;
+            flex-wrap: wrap;
+        ">
+            <!-- Left -->
+            <div class="footer-left" style="flex: 1; text-align: left;">
+                DEV
+            </div>
 
-                <td style="text-align: center; vertical-align: top;">
-                    <p style="margin: 0;">MICHAEL MARKOV</p>
-                </td>
+            <!-- Center -->
+            <div class="footer-center" style="flex: 1; text-align: center;">
+                <p style="margin: 0;">MICHAEL MARKOV</p>
+            </div>
 
-                <td style="text-align: right; vertical-align: top;">
-                    <a href="/contact" style="color: #999; text-decoration: none;">CONTACT</a>
-                    <p style="margin: 0;">SUPPORT</p>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: left; vertical-align: top;">
-                    
-                </td>
+            <!-- Right -->
+            <div class="footer-right" style="flex: 1; text-align: right;">
+                <a href="/contact" style="color: #999; text-decoration: none;">CONTACT</a>
+                <p style="margin: 0;">SUPPORT</p>
+            </div>
+        </div>
 
-                <td style="text-align: center; vertical-align: top;">
-                    <p style="margin: 0;">© 2025 · ALL RIGHTS RESERVED</p>
-                    <p style="margin: 0;">
-                        <a href="/tos" style="color: #999; text-decoration: none;">TERMS</a>
-                         · 
-                        <a href="/privacy" style="color: #999; text-decoration: none;">PRIVACY</a>
-                         · 
-                        <a href="/about" style="color: #999; text-decoration: none;">ABOUT</a>
-                    </p>
-                </td>
+        <p style="margin: 0; text-align: center">© 2025 · ALL RIGHTS RESERVED</p>
+        <p style="margin: 0; text-align: center">
+            <a href="/tos" style="color: #999; text-decoration: none;">TERMS</a>
+                · 
+            <a href="/privacy" style="color: #999; text-decoration: none;">PRIVACY</a>
+                · 
+            <a href="/about" style="color: #999; text-decoration: none;">ABOUT</a>
+        </p>
 
-                <td style="text-align: right; vertical-align: top;">
-                    
-                </td>
-            </tr>
-        </table>
+        <style>
+            @media (max-width: 768px) {
+                .footer-top {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+                .footer-left,
+                .footer-center,
+                .footer-right {
+                    flex: 1 1 100%;
+                    text-align: center;
+                }
+            }
+        </style>
     `;
 
     document.body.appendChild(footer);
