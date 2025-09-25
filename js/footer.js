@@ -28,7 +28,9 @@ export function createFooter() {
             <!-- Right -->
             <div class="footer-right" style="flex: 1; text-align: right;">
                 <a href="/contact" style="color: #999; text-decoration: none;">CONTACT</a>
-                <p style="margin: 0;">SUPPORT</p>
+                <br>
+                <a href="/support" style="color: #999; text-decoration: none;">SUPPORT</a>
+                <p style="margin: 0;">Text</p>
             </div>
         </div>
 

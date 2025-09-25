@@ -8,6 +8,8 @@ import { renderAboutPage } from "./pages/about.js";
 import { renderPrivacyPage } from "./pages/privacy.js";
 import { renderSignaturePage } from "./pages/signature.js";
 import { renderTosPage } from "./pages/tos.js";
+import { renderSupportPage } from "./pages/support.js";
+import { renderSkillsPage } from "./pages/skills.js";
 
 const routes = {
   "/": renderStartpagePage,
@@ -20,7 +22,9 @@ const routes = {
   "/privacy": renderPrivacyPage,
   "/signature": renderSignaturePage,
   "/tos": renderTosPage,
-  "/404": render404Page
+  "/404": render404Page,
+  "/support": renderSupportPage,
+  "/skills": renderSkillsPage
 };
 
 export function initRouter() {
