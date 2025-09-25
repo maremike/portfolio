@@ -149,7 +149,7 @@ export function createHeader(initialColorScheme) {
     // --- Responsive logic using isCrowded ---
     function updateNavDisplay() {
         const rightItems = Array.from(navRight.children).filter(el => el !== burger);
-        if (isCrowded(header, ul, rightItems, 16)) {
+        if (isCrowded(header, ul, rightItems, 225)) {
             ul.style.display = "none";
             burger.style.display = "block";
         } else {
