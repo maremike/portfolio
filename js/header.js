@@ -1,11 +1,12 @@
 import { switchToDarkMode, switchToLightMode } from "./utility/themes.js";
+import { createHamburgerMenu } from "./components/hamburger.js";
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme;
 
     const header = document.createElement("header");
-    const nav = document.createElement("nav");
-    nav.className = "navbar";
+    header.className = "navbar"; // make header itself the navbar
+    header.style.width = "100%";
 
     // --- Nav list ---
     const ul = document.createElement("ul");
@@ -38,7 +39,15 @@ export function createHeader(initialColorScheme) {
         ul.appendChild(li);
     });
 
-    const home = { image: "src/image.png", href: "/" }
+    // --- Home logo ---
+    const home = { image: "src/image.png", href: "/" };
+    const homeLink = document.createElement("a");
+    homeLink.href = home.href;
+    const homeImg = document.createElement("img");
+    homeImg.src = home.image;
+    homeImg.alt = "Home";
+    homeImg.style.height = "40px";
+    homeLink.appendChild(homeImg);
 
     // --- Theme toggle ---
     const toggleBtn = document.createElement("button");
@@ -68,47 +77,54 @@ export function createHeader(initialColorScheme) {
     });
 
     // --- Hamburger button ---
-    const burger = document.createElement("button");
-    burger.className = "burger";
-    burger.innerHTML = "☰";
-    burger.style.fontSize = "1.5rem";
-    burger.style.background = "none";
-    burger.style.border = "none";
-    burger.style.cursor = "pointer";
+    const burger = createHamburgerMenu(navItems);
 
-    burger.addEventListener("click", () => {
-        ul.classList.toggle("active");
-    });
+    // --- Header layout ---
+    const navLeft = document.createElement("div");
+    navLeft.className = "nav-left";
+    navLeft.appendChild(homeLink);
 
-    // --- Container ---
-    const navContainer = document.createElement("div");
-    navContainer.className = "nav-container";
-    navContainer.appendChild(ul);
-    navContainer.appendChild(toggleBtn);
-    navContainer.appendChild(burger);
+    const navCenter = document.createElement("div");
+    navCenter.className = "nav-center";
+    navCenter.appendChild(ul);
 
-    nav.appendChild(navContainer);
-    header.appendChild(nav);
+    const navRight = document.createElement("div");
+    navRight.className = "nav-right";
+    navRight.appendChild(toggleBtn);
+    navRight.appendChild(burger);
+
+    header.appendChild(navLeft);
+    header.appendChild(navCenter);
+    header.appendChild(navRight);
+
     document.body.appendChild(header);
 
     // --- Styles ---
     const style = document.createElement("style");
     style.textContent = `
         .navbar {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            background: #fff; /* clean white */
-            border-bottom: 1px solid #ddd;
-        }
-        .nav-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0.5rem 1rem;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
         }
+
+        .nav-left, .nav-center, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-left { order: 1; justify-content: flex-start; }
+        .nav-center { order: 2; justify-content: center; flex: 1; }
+        .nav-right { order: 3; justify-content: flex-end; }
+
         .nav-list {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 2rem;
             margin: 0;
             padding: 0;
         }
@@ -119,29 +135,12 @@ export function createHeader(initialColorScheme) {
 
         /* --- Mobile --- */
         @media (max-width: 768px) {
-            .nav-list {
-                display: none;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                margin-top: 0.5rem;
-                background: #fff;
-                padding: 0.5rem 0;
-            }
-            .nav-list.active {
-                display: flex;
-            }
-            .burger {
-                display: block;
-                margin-left: 1rem;
-            }
+            .nav-center { display: none; }
+            .nav-right { gap: 0.5rem; }
+            .burger { display: block; }
         }
-
-        /* --- Desktop --- */
         @media (min-width: 769px) {
-            .burger {
-                display: none;
-            }
+            .burger { display: none; }
         }
     `;
     document.head.appendChild(style);
