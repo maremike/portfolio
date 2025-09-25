@@ -1,11 +1,12 @@
 import { switchToDarkMode, switchToLightMode } from "./utility/themes.js";
 import { createHamburgerMenu } from "./components/hamburger.js";
+import { isCrowded } from "./utility/crowding.js"; // new import
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme;
 
     const header = document.createElement("header");
-    header.className = "navbar"; // make header itself the navbar
+    header.className = "navbar";
     header.style.width = "100%";
 
     // --- Nav list ---
@@ -119,12 +120,12 @@ export function createHeader(initialColorScheme) {
 
         .nav-left { order: 1; justify-content: flex-start; }
         .nav-center { order: 2; justify-content: center; flex: 1; }
-        .nav-right { order: 3; justify-content: flex-end; }
+        .nav-right { order: 3; justify-content: flex-end; flex-shrink: 0; }
 
         .nav-list {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
             margin: 0;
             padding: 0;
         }
@@ -133,15 +134,30 @@ export function createHeader(initialColorScheme) {
             color: #333;
         }
 
-        /* --- Mobile --- */
-        @media (max-width: 768px) {
-            .nav-center { display: none; }
-            .nav-right { gap: 0.5rem; }
-            .burger { display: block; }
-        }
-        @media (min-width: 769px) {
-            .burger { display: none; }
+        .burger {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
     `;
     document.head.appendChild(style);
+
+    // --- Responsive logic using isCrowded ---
+    function updateNavDisplay() {
+        const rightItems = Array.from(navRight.children).filter(el => el !== burger);
+        if (isCrowded(header, ul, rightItems, 16)) {
+            ul.style.display = "none";
+            burger.style.display = "block";
+        } else {
+            ul.style.display = "flex";
+            burger.style.display = "none";
+        }
+    }
+
+    // Initial check
+    updateNavDisplay();
+    // Re-check on window resize
+    window.addEventListener("resize", updateNavDisplay);
 }
