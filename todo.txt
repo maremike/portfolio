@@ -28,3 +28,6 @@
 - Add Support (Buy me a Coffee, Patreon, Ko-Fi, Paypal Business)
 
 - Add global method to check for mobile or make everything dynamic
+
+- Icons: Location, www, phone, mail, neurons, atoms, chip (cpu), bolt, gears, robot (kuka), facebook, email, instagram, youtube, digitalization (globe with connection), stonks/charts, plane, rocket, car, discet, shield, database, drawers (organization), pen, tools (wrench/screwdriver), idea (lightbulb), bell (dining), university (pillars), studying, books, leafs, sun, clean (brush), shopping cart, diamond, testdummy, goal (darts), hamburger menu, light mode, dark mode, music, confetti
+- Fonts: ...

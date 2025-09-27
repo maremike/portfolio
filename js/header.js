@@ -43,14 +43,33 @@ export function createHeader(initialColorScheme) {
     });
 
     // --- Home logo ---
-    const home = { image: "src/image.png", href: "/" };
+    const homeLogo = {
+        dark: "https://cdn.michael.markov.uk/logos/0_dark.svg",
+        light: "https://cdn.michael.markov.uk/logos/0_light.svg",
+        href: "/"
+    };
     const homeLink = document.createElement("a");
-    homeLink.href = home.href;
-    const homeImg = document.createElement("img");
-    homeImg.src = home.image;
-    homeImg.alt = "Home";
-    homeImg.style.height = "40px";
-    homeLink.appendChild(homeImg);
+    homeLink.href = homeLogo.href;
+
+    // Helper function to load SVG inline
+    async function loadHomeSVG(url) {
+        try {
+            const res = await fetch(url);
+            const svgText = await res.text();
+            homeLink.innerHTML = svgText;
+
+            const svgEl = homeLink.querySelector("svg");
+            if (svgEl) {
+                svgEl.setAttribute("height", "40");
+                svgEl.setAttribute("width", "auto");
+            }
+        } catch (err) {
+            console.error("Failed to load SVG:", err);
+        }
+    }
+
+    // Load initial SVG based on initialColorScheme
+    loadHomeSVG(initialColorScheme === "dark" ? homeLogo.light : homeLogo.dark);
 
     // --- Theme toggle ---
     const toggleBtn = document.createElement("button");
@@ -70,10 +89,12 @@ export function createHeader(initialColorScheme) {
             colorScheme = "light";
             toggleBtn.textContent = "☀️";
             await switchToLightMode();
+            await loadHomeSVG(homeLogo.dark);  // swap logo for light mode
         } else {
             colorScheme = "dark";
             toggleBtn.textContent = "🌙";
             await switchToDarkMode();
+            await loadHomeSVG(homeLogo.light); // swap logo for dark mode
         }
 
         isSwitching = false;
