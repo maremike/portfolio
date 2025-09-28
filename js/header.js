@@ -44,8 +44,8 @@ export function createHeader(initialColorScheme) {
 
     // --- Home logo ---
     const homeLogo = {
-        dark: "https://cdn.michael.markov.uk/logos/0_dark.svg",
-        light: "https://cdn.michael.markov.uk/logos/0_light.svg",
+        dark: "https://cdn.michael.markov.uk/logos/000000/0.svg",
+        light: "https://cdn.michael.markov.uk/logos/000000/0.svg",
         href: "/"
     };
     const homeLink = document.createElement("a");
