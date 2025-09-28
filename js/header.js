@@ -1,9 +1,10 @@
 import { switchToDarkMode, switchToLightMode } from "./utility/themes.js";
 import { createHamburgerMenu } from "./components/hamburger.js";
-import { isCrowded } from "./utility/crowding.js"; // new import
+import { isCrowded } from "./utility/crowding.js";
 
 export function createHeader(initialColorScheme) {
     let colorScheme = initialColorScheme;
+    let isSwitching = false;
 
     const header = document.createElement("header");
     header.className = "navbar";
@@ -32,6 +33,7 @@ export function createHeader(initialColorScheme) {
             img.src = item.image;
             img.alt = "Logo";
             img.style.height = "40px";
+            img.style.width = "auto";
             a.appendChild(img);
         }
 
@@ -52,16 +54,15 @@ export function createHeader(initialColorScheme) {
     const homeLink = document.createElement("a");
     homeLink.href = homeLogo.href;
 
-    // Helper function to load SVG inline
-    async function loadHomeSVG(url) {
+    // Helper function to load inline SVG into a container
+    async function loadSVG(container, url, height = 25) {
         try {
             const res = await fetch(url);
             const svgText = await res.text();
-            homeLink.innerHTML = svgText;
-
-            const svgEl = homeLink.querySelector("svg");
+            container.innerHTML = svgText;
+            const svgEl = container.querySelector("svg");
             if (svgEl) {
-                svgEl.setAttribute("height", "40");
+                svgEl.setAttribute("height", `${height}`);
                 svgEl.setAttribute("width", "auto");
             }
         } catch (err) {
@@ -69,39 +70,46 @@ export function createHeader(initialColorScheme) {
         }
     }
 
-    // Load initial SVG based on initialColorScheme
-    loadHomeSVG(initialColorScheme === "dark" ? homeLogo.light : homeLogo.dark);
+    // Load initial home logo
+    loadSVG(homeLink, colorScheme === "dark" ? homeLogo.light : homeLogo.dark);
 
-    // --- Theme toggle ---
+    // --- Theme toggle button ---
     const toggleBtn = document.createElement("button");
     toggleBtn.id = "theme-toggle";
     toggleBtn.style.cursor = "pointer";
     toggleBtn.style.background = "none";
     toggleBtn.style.border = "none";
-    toggleBtn.style.fontSize = "1.2rem";
-    toggleBtn.textContent = colorScheme === "dark" ? "🌙" : "☀️";
+    toggleBtn.style.padding = "0";
+    toggleBtn.style.height = "25px";
 
-    let isSwitching = false;
+    // Load initial toggle icon
+    async function updateToggleIcon() {
+        const iconUrl = colorScheme === "dark"
+            ? "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffff/cloud-moon.svg"
+            : "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000/sun.svg";
+        await loadSVG(toggleBtn, iconUrl);
+    }
+    updateToggleIcon();
+
     toggleBtn.addEventListener("click", async () => {
         if (isSwitching) return;
         isSwitching = true;
 
         if (colorScheme === "dark") {
             colorScheme = "light";
-            toggleBtn.textContent = "☀️";
             await switchToLightMode();
-            await loadHomeSVG(homeLogo.dark);  // swap logo for light mode
+            await loadSVG(homeLink, homeLogo.dark);
         } else {
             colorScheme = "dark";
-            toggleBtn.textContent = "🌙";
             await switchToDarkMode();
-            await loadHomeSVG(homeLogo.light); // swap logo for dark mode
+            await loadSVG(homeLink, homeLogo.light);
         }
 
+        await updateToggleIcon();
         isSwitching = false;
     });
 
-    // --- Hamburger button ---
+    // --- Hamburger menu ---
     const burger = createHamburgerMenu(navItems);
 
     // --- Header layout ---
@@ -177,8 +185,6 @@ export function createHeader(initialColorScheme) {
         }
     }
 
-    // Initial check
     updateNavDisplay();
-    // Re-check on window resize
     window.addEventListener("resize", updateNavDisplay);
 }
