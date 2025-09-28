@@ -132,8 +132,6 @@ export function createHeader(initialColorScheme) {
             align-items: center;
             justify-content: space-between;
             padding: 0.5rem 1rem;
-            background: #fff;
-            border-bottom: 1px solid #ddd;
         }
 
         .nav-left, .nav-center, .nav-right {
@@ -155,7 +153,6 @@ export function createHeader(initialColorScheme) {
         }
         .nav-list li a {
             text-decoration: none;
-            color: #333;
         }
 
         .burger {
