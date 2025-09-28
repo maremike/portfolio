@@ -10,6 +10,7 @@ import { renderSignaturePage } from "./pages/signature.js";
 import { renderTosPage } from "./pages/tos.js";
 import { renderSupportPage } from "./pages/support.js";
 import { renderSkillsPage } from "./pages/skills.js";
+import { renderResumePage } from "./pages/resume.js";
 
 const routes = {
   "/": renderStartpagePage,
@@ -24,7 +25,8 @@ const routes = {
   "/tos": renderTosPage,
   "/404": render404Page,
   "/support": renderSupportPage,
-  "/skills": renderSkillsPage
+  "/skills": renderSkillsPage,
+  "/resume": renderResumePage
 };
 
 export function initRouter() {

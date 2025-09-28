@@ -17,6 +17,7 @@ export function createHeader(initialColorScheme) {
         { text: "Products", href: "/products" },
         { text: "Projects", href: "/projects" },
         { text: "Skills", href: "/skills" },
+        { text: "Resume", href: "/resume" },
         { text: "Contact", href: "/contact" },
         { text: "Support", href: "/support" }
     ];
