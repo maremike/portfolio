@@ -1,0 +1,80 @@
+/* 1. Reduce motion for motion-sensitive users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 2. High contrast / forced colors */
+@media (forced-colors: active) {
+  * {
+    forced-color-adjust: none; /* keep your custom colors */
+    outline: 2px solid WindowText; /* ensure focus is visible */
+  }
+
+  #light, #dark, #sky, #clouds, #space {
+    filter: none !important; /* disable filters that may break contrast */
+  }
+}
+
+/* 3. Contrast preferences */
+@media (prefers-contrast: more) {
+  body {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+  #light, #dark, #sky, #clouds, #space {
+    opacity: 1 !important; /* make overlays fully opaque for readability */
+  }
+}
+
+@media (prefers-contrast: less) {
+  body {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+  #light, #dark, #sky, #clouds, #space {
+    opacity: 0.8; /* reduce overlay intensity */
+  }
+}
+
+/* 4. Reduce transparency */
+@media (prefers-reduced-transparency: reduce) {
+  * {
+    background: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* 5. Inverted colors */
+@media (inverted-colors: inverted) {
+  body {
+    filter: invert(100%) hue-rotate(180deg);
+  }
+  #light, #dark, #sky, #clouds, #space {
+    filter: invert(100%) hue-rotate(180deg);
+  }
+}
+
+/* 6. Touchscreen / coarse pointer */
+@media (pointer: coarse) {
+  button, a {
+    padding: 1rem;
+    font-size: 1.2rem; /* make interactive elements larger for touch */
+  }
+}
+
+/* 7. Cannot hover */
+@media (hover: none) {
+  button:hover, a:hover {
+    background-color: inherit; /* disable hover effects */
+  }
+}
+
+/* 8. Reduced data usage */
+@media (prefers-reduced-data: reduce) {
+  #light, #dark, #sky, #clouds, #space {
+    display: none !important; /* skip heavy overlay animations */
+  }
+}

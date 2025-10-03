@@ -1,0 +1,87 @@
+/* Base header styles */
+header {
+  width: 100%;
+  background-color: var(--header-bg);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 240ms ease, color 240ms ease;
+}
+
+/* Navbar layout */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-left { order: 1; justify-content: flex-start; }
+.nav-center { order: 2; justify-content: center; flex: 1; }
+.nav-right { order: 3; justify-content: flex-end; flex-shrink: 0; }
+
+/* Nav list */
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-list li a:hover {
+  color: var(--accent);
+}
+
+/* Hamburger button */
+.burger {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Buttons (theme toggle) */
+button.theme-toggle {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 25px;
+  transition: transform 120ms ease;
+}
+
+button.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+/* Home logo */
+.nav-left a svg {
+  height: 25px;
+  width: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+  }
+}

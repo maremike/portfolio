@@ -31,6 +31,7 @@
     --overlay-opacity: 1;
   }
 }
+
 @media (prefers-color-scheme: light){
   :root:not([data-theme]) {
     /* nothing — defaults above already light */
