@@ -53,24 +53,6 @@ let spaceOverlay: {
   scrollHandler: null,
 };
 
-export function removeSpaceOverlay(): void {
-  if (!spaceOverlay.canvas || !spaceOverlay.ctx) return;
-
-  if (spaceOverlay.animationId !== null) {
-    cancelAnimationFrame(spaceOverlay.animationId);
-  }
-  if (spaceOverlay.resizeHandler) {
-    window.removeEventListener("resize", spaceOverlay.resizeHandler);
-  }
-  if (spaceOverlay.scrollHandler) {
-    window.removeEventListener("scroll", spaceOverlay.scrollHandler);
-  }
-
-  spaceOverlay.ctx.clearRect(0, 0, spaceOverlay.canvas.width, spaceOverlay.canvas.height);
-
-  spaceOverlay = { canvas: null, ctx: null, animationId: null, resizeHandler: null, scrollHandler: null };
-}
-
 export function initSpaceOverlay(): void {
   const scale = getScaleFactor();
 
