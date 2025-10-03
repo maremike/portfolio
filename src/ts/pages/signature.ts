@@ -27,7 +27,7 @@ export function renderSignaturePage() {
         <!-- Contact information with updated icons -->
         <tr>
             <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
-                <img src="https://cdn.michael.markov.uk/icons/00000000/phone.svg" alt="phone" width="20" height="20" style="vertical-align: middle;">
+                <img src="https://cdn.michael.markov.uk/icons/000000ff/phone.svg" alt="phone" width="20" height="20" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
                 <a href="tel:+49 1515 6526597" style="text-decoration: none; color: #0078d4; font-size: 12px;">+49 1515 6526597</a>
@@ -35,7 +35,7 @@ export function renderSignaturePage() {
         </tr>
         <tr>
             <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
-                <img src="https://cdn.michael.markov.uk/icons/00000000/mail.svg" alt="mail" width="18" height="18" style="vertical-align: middle;">
+                <img src="https://cdn.michael.markov.uk/icons/000000ff/mail.svg" alt="mail" width="18" height="18" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
                 <a href="mailto:michael@markov.uk" style="text-decoration: none; color: #0078d4; font-size: 12px;">michael@markov.uk</a>
@@ -43,13 +43,13 @@ export function renderSignaturePage() {
         </tr>
         <tr>
             <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
-                <img src="https://cdn.michael.markov.uk/icons/00000000/location.svg" alt="location" width="20" height="20" style="vertical-align: middle;">
+                <img src="https://cdn.michael.markov.uk/icons/000000ff/location.svg" alt="location" width="20" height="20" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle; color: #000000; font-size: 12px;">Steinkamp 10i, 28717 Bremen, Germany</td>
         </tr>
         <tr>
             <td style="padding: 0; vertical-align: middle; width: 20px; text-align: center;">
-                <img src="https://cdn.michael.markov.uk/icons/00000000/globe.svg" alt="location" width="20" height="20" style="vertical-align: middle;">
+                <img src="https://cdn.michael.markov.uk/icons/000000ff/globe.svg" alt="location" width="20" height="20" style="vertical-align: middle;">
             </td>
             <td style="padding: 2px 0; vertical-align: middle;">
                 <a href="https://www.michael.markov.uk" style="text-decoration: none; color: #0078d4; font-size: 12px;">www.michael.markov.uk</a>
