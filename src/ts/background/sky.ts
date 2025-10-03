@@ -145,7 +145,7 @@ let cloudOverlay: {
   animationId: null,
   resizeHandler: null,
   scrollHandler: null,
-^};
+};
 
 export function initCloudOverlay(): void {
   const scale = getScaleFactor();
