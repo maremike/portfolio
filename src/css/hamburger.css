@@ -1,0 +1,84 @@
+/* --- Fullscreen overlay --- */
+.hamburger-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg); /* Use theme variable */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), background 0.3s ease;
+  z-index: 10000;
+  padding-top: 4rem;
+}
+
+.hamburger-overlay.open {
+  transform: translateY(0);
+}
+
+/* --- Nav links --- */
+.hamburger-link {
+  width: 100%;
+  padding: 1rem 2rem;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 1.5rem;
+  color: var(--text); /* theme-aware text color */
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.hamburger-link.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Right arrow --- */
+.hamburger-arrow {
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hamburger-link:hover .hamburger-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- Close button --- */
+.hamburger-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10001;
+  display: none;
+  color: var(--text); /* theme-aware close button */
+}
+
+.hamburger-close.visible {
+  display: block;
+}
+
+/* --- Hamburger button --- */
+.burger {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10002;
+  color: var(--text); /* theme-aware burger icon */
+}

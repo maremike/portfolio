@@ -1,8 +1,74 @@
+/* Base footer styles */
 footer {
   text-align: center;
-  padding: 1rem;
+  padding: 3rem 1rem; /* use the larger padding from new footer */
   background-color: var(--header-bg);
-  fontFamily: "'Courier New', Courier, monospace";
-  font-size: 0.9rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px; /* consistent with new footer */
   color: var(--muted);
+  width: 100%;
+}
+
+/* Footer top layout */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-right a {
+  text-decoration: none;
+  color: var(--muted); /* inherit muted color */
+}
+
+/* Footer bottom text */
+.footer-bottom {
+  margin: 0;
+  text-align: center;
+}
+
+/* Footer links */
+.footer-links a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: 1 1 100%;
+    text-align: center;
+  }
 }
