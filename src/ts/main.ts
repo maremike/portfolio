@@ -1,7 +1,7 @@
-import { initTheme } from "./utility/themes.js";
-import { createHeader } from "./header.js";
-import { createFooter } from "./footer.js";
-import { initRouter } from "./router.js";
+import { initRouter } from "./router";
+import { createHeader } from "./header";
+import { createFooter } from "./footer";
+import { initTheme } from "./utility/themes";
 
 function init() {
     // Setup Background

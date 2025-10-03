@@ -1,23 +1,25 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Michael Markov</title>
-  <link rel="icon" type="image/svg+xml" href="https://cdn.michael.markov.uk/logos/000000/1.svg" media="(prefers-color-scheme: light)">
-  <link rel="icon" type="image/svg+xml" href="https://cdn.michael.markov.uk/logos/ffffff/1.svg" media="(prefers-color-scheme: dark)">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Michael Markov</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn.michael.markov.uk/logos/000000/1.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/svg+xml" href="https://cdn.michael.markov.uk/logos/ffffff/1.svg" media="(prefers-color-scheme: dark)">
 
-  <link rel="stylesheet" href="css/background.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/utility.css">
-</head>
-<body>
-  <canvas id="dark" style="display: none;"></canvas>
-  <canvas id="light" style="display: none;"></canvas>
-  <canvas id="sky" style="display: none;"></canvas>
-  <canvas id="space" style="display: none;"></canvas>
-  <canvas id="clouds" style="display: none;"></canvas>
-  <script type="module" src="js/main.js"></script>
-</body>
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/utility.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <canvas id="dark" style="display: none;"></canvas>
+    <canvas id="light" style="display: none;"></canvas>
+    <canvas id="sky" style="display: none;"></canvas>
+    <canvas id="space" style="display: none;"></canvas>
+    <canvas id="clouds" style="display: none;"></canvas>
+    <script type="module" src="src/ts/main.ts"></script>
+  </body>
 </html>

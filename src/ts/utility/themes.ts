@@ -1,5 +1,5 @@
-import { initSkyBackground, initCloudOverlay } from "../background/sky.js";
-import { initSpaceOverlay } from "../background/space.js";
+import { initSkyBackground, initCloudOverlay } from "../background/sky";
+import { initSpaceOverlay } from "../background/space";
 
 function getBackgroundElements() {
     return {

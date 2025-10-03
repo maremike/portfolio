@@ -1,8 +1,9 @@
-import { switchToDarkMode, switchToLightMode } from "./utility/themes.js";
-import { createHamburgerMenu } from "./components/hamburger.js";
-import { isCrowded } from "./utility/crowding.js";
+import { switchToDarkMode, switchToLightMode } from "./utility/themes";
+import { createHamburgerMenu, type NavItem } from "./components/hamburger";
 
-export function createHeader(initialColorScheme) {
+type ColorScheme = "dark" | "light";
+
+export function createHeader(initialColorScheme: ColorScheme): void {
     let colorScheme = initialColorScheme;
     let isSwitching = false;
 
@@ -14,36 +15,36 @@ export function createHeader(initialColorScheme) {
     const ul = document.createElement("ul");
     ul.className = "nav-list";
 
-    const navItems = [
-        { text: "Products", href: "/products" },
-        { text: "Projects", href: "/projects" },
-        { text: "Skills", href: "/skills" },
-        { text: "Resume", href: "/resume" },
-        { text: "Contact", href: "/contact" },
-        { text: "Support", href: "/support" }
-    ];
+    const navItems: NavItem[] = [
+    { text: "Products", href: "/products" },
+    { text: "Projects", href: "/projects" },
+    { text: "Skills", href: "/skills" },
+    { text: "Resume", href: "/resume" },
+    { text: "Contact", href: "/contact" },
+    { text: "Support", href: "/support" }
+  ];
 
-    navItems.forEach(item => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = item.href;
+    navItems.forEach((item) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = item.href;
 
-        if (item.image) {
-            const img = document.createElement("img");
-            img.src = item.image;
-            img.alt = "Logo";
-            img.style.height = "40px";
-            img.style.width = "auto";
-            a.appendChild(img);
-        }
+    if (item.image) {
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = "Logo";
+      img.style.height = "40px";
+      img.style.width = "auto";
+      a.appendChild(img);
+    }
 
-        if (item.text) {
-            a.appendChild(document.createTextNode(item.text));
-        }
+    if (item.text) {
+      a.appendChild(document.createTextNode(item.text));
+    }
 
-        li.appendChild(a);
-        ul.appendChild(li);
-    });
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
 
     // --- Home logo ---
     const homeLogo = {
@@ -55,7 +56,7 @@ export function createHeader(initialColorScheme) {
     homeLink.href = homeLogo.href;
 
     // Helper function to load inline SVG into a container
-    async function loadSVG(container, url, height = 25) {
+    async function loadSVG(container: HTMLElement, url: string, height: number = 25): Promise<void> {
         try {
             const res = await fetch(url);
             const svgText = await res.text();
@@ -173,15 +174,32 @@ export function createHeader(initialColorScheme) {
     `;
     document.head.appendChild(style);
 
+    function isCrowded(
+    container: HTMLElement,
+    target: HTMLElement,
+    excludeElements: HTMLElement[] = [],
+    gap: number = 0): boolean {
+        // Total width of excluded elements
+        const excludedWidth = excludeElements.reduce(
+            (total, el) => total + el.offsetWidth,
+            0
+        );
+
+        const availableWidth = container.offsetWidth - excludedWidth - gap;
+        const targetWidth = target.scrollWidth;
+
+        return targetWidth > availableWidth;
+    }
+
     // --- Responsive logic using isCrowded ---
-    function updateNavDisplay() {
-        const rightItems = Array.from(navRight.children).filter(el => el !== burger);
+    function updateNavDisplay(): void {
+        const rightItems = Array.from(navRight.children).filter((el) => el !== burger) as HTMLElement[];
         if (isCrowded(header, ul, rightItems, 225)) {
-            ul.style.display = "none";
-            burger.style.display = "block";
+        ul.style.display = "none";
+        burger.style.display = "block";
         } else {
-            ul.style.display = "flex";
-            burger.style.display = "none";
+        ul.style.display = "flex";
+        burger.style.display = "none";
         }
     }
 
