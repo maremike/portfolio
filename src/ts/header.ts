@@ -62,8 +62,8 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   }
 
   const homeLogo = {
-    dark: "https://cdn.michael.markov.uk/logos/000000/0.svg",
-    light: "https://cdn.michael.markov.uk/logos/ffffff/0.svg"
+    dark: "https://cdn.michael.markov.uk/logos/00000000/0.svg",
+    light: "https://cdn.michael.markov.uk/logos/ffffff00/0.svg"
   };
   loadSVG(homeLink, colorScheme === "dark" ? homeLogo.light : homeLogo.dark);
 
@@ -71,8 +71,8 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   async function updateToggleIcon() {
     const iconUrl =
       colorScheme === "dark"
-        ? "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffff/cloud-moon.svg"
-        : "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000/sun.svg";
+        ? "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffff00/cloud-moon.svg"
+        : "https://cdn.michael.markov.uk/icons/fontawesome/solid/00000000/sun.svg";
     await loadSVG(toggleBtn, iconUrl);
   }
   updateToggleIcon();
