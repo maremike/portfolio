@@ -1,19 +1,12 @@
 /* Base header styles */
 header {
-  width: 100%;
   background-color: var(--header-bg);
-  padding: 1rem;
   position: sticky;
   top: 0;
-  z-index: 100;
-  transition: background-color 240ms ease, color 240ms ease;
-}
-
-/* Navbar layout */
-.navbar {
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0.5rem 1rem;
 }
 
@@ -31,12 +24,18 @@ header {
 
 /* Nav list */
 .nav-list {
-  list-style: none;
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin: 0;
+  gap: 1rem; /* or 2%, NOT 10% */
+  list-style: none;
   padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  flex: 1 1 0;
+  min-width: 0; /* Critical: allows shrinking */
+  text-align: center;
 }
 
 .nav-list li a {

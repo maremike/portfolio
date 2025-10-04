@@ -19,7 +19,7 @@ export function createHeader(initialColorScheme: ColorScheme): void {
 
   // --- Header container ---
   const header = document.createElement("header");
-  header.className = "navbar";
+  header.className = "header";
 
   header.innerHTML = `
     <div class="nav-left">
