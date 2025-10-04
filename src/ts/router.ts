@@ -33,22 +33,30 @@ const routes: Record<string, PageRenderFunction> = {
 };
 
 export function initRouter(): void {
-  // Handle link clicks
   document.body.addEventListener("click", (e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target.tagName === "A" && target instanceof HTMLAnchorElement && target.href.startsWith(window.location.origin)) {
-      e.preventDefault();
-      const path = new URL(target.href).pathname;
-      navigateTo(path);
-    }
+
+    // Find closest element with routing intent
+    const routeEl = target.closest<HTMLElement>('a[href], [data-href]');
+
+    if (!routeEl) return;
+
+    // Extract href from either <a> tag or data-href attribute
+    const href = routeEl instanceof HTMLAnchorElement
+      ? routeEl.href
+      : routeEl.getAttribute("data-href");
+
+    if (!href || !href.startsWith(window.location.origin)) return;
+
+    e.preventDefault();
+    const path = new URL(href).pathname;
+    navigateTo(path);
   });
 
-  // Handle back/forward
   window.addEventListener("popstate", () => {
     render(window.location.pathname);
   });
 
-  // Initial render
   render(window.location.pathname);
 }
 

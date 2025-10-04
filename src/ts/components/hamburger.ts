@@ -10,27 +10,30 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
   overlay.className = "hamburger-overlay";
 
   // --- Nav items ---
-  const links: HTMLAnchorElement[] = [];
+  const buttons: HTMLButtonElement[] = [];
 
   navItems.forEach((item) => {
-    const link: HTMLAnchorElement = document.createElement("a");
-    link.className = "hamburger-link";
-    link.textContent = item.text ?? "";
-    link.href = item.href; // SPA router intercepts <a> clicks automatically
+    const button: HTMLButtonElement = document.createElement("button");
+    button.className = "hamburger-link";
+    button.textContent = item.text ?? "";
 
     // --- Right arrow/diamond ---
     const arrow: HTMLSpanElement = document.createElement("span");
     arrow.className = "hamburger-arrow";
     arrow.textContent = "❯";
-    link.appendChild(arrow);
+    button.appendChild(arrow);
 
-    // Close menu when link is clicked
-    link.addEventListener("click", () => {
+    // Handle routing (replace this with your SPA router if needed)
+    button.addEventListener("click", () => {
+      // Example: For a simple SPA using pushState
+      window.history.pushState({}, "", item.href);
+      window.dispatchEvent(new PopStateEvent("popstate")); // Let your router react to the change
+
       closeMenu();
     });
 
-    overlay.appendChild(link);
-    links.push(link);
+    overlay.appendChild(button);
+    buttons.push(button);
   });
 
   document.body.appendChild(overlay);
@@ -54,9 +57,9 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
     overlay.classList.add("open");
     closeBtn.classList.add("visible");
 
-    links.forEach((link, i) => {
+    buttons.forEach((btn, i) => {
       setTimeout(() => {
-        link.classList.add("visible");
+        btn.classList.add("visible");
       }, i * 50);
     });
 
@@ -65,8 +68,8 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
 
   function closeMenu(): void {
     overlay.classList.remove("open");
-    links.forEach((link) => {
-      link.classList.remove("visible");
+    buttons.forEach((btn) => {
+      btn.classList.remove("visible");
     });
     closeBtn.classList.remove("visible");
     isOpen = false;
