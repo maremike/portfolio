@@ -22,17 +22,17 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   header.className = "header";
 
   header.innerHTML = `
-    <div class="nav-left">
+    <div class="header-left">
       <a href="/" id="home-logo"></a>
     </div>
 
-    <div class="nav-center">
-      <ul class="nav-list">
+    <div class="header-center">
+      <ul class="header-list">
         ${navItems.map(item => `<li><a href="${item.href}">${item.text ?? ""}</a></li>`).join("")}
       </ul>
     </div>
 
-    <div class="nav-right">
+    <div class="header-right">
       <button id="theme-toggle" class="theme-toggle"></button>
     </div>
   `;
@@ -42,8 +42,8 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   // --- References ---
   const homeLink = header.querySelector<HTMLAnchorElement>("#home-logo")!;
   const toggleBtn = header.querySelector<HTMLButtonElement>("#theme-toggle")!;
-  const navRight = header.querySelector<HTMLDivElement>(".nav-right")!;
-  const ul = header.querySelector<HTMLUListElement>(".nav-list")!;
+  const headerRight = header.querySelector<HTMLDivElement>(".header-right")!;
+  const ul = header.querySelector<HTMLUListElement>(".header-list")!;
 
   // --- Load logo SVG ---
   async function loadSVG(container: HTMLElement, url: string, height: number = 25) {
@@ -98,7 +98,7 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   // --- Hamburger menu ---
   const burger = createHamburgerMenu(navItems);
   burger.classList.add("burger");
-  navRight.appendChild(burger);
+  headerRight.appendChild(burger);
 
   // --- Global SPA click interception ---
   document.body.addEventListener("click", (e: MouseEvent) => {
@@ -122,7 +122,7 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   }
 
   function updateNavDisplay(): void {
-    const rightItems = Array.from(navRight.children).filter(el => el !== burger) as HTMLElement[];
+    const rightItems = Array.from(headerRight.children).filter(el => el !== burger) as HTMLElement[];
     if (isCrowded(header, ul, rightItems, 225)) {
       ul.style.display = "none";
       burger.style.display = "block";

@@ -5,47 +5,50 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  align-items: center;
+  margin: 0;
   padding: 0.5rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.nav-left,
-.nav-center,
-.nav-right {
+.header-center,
+.header-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
-.nav-left { order: 1; justify-content: flex-start; }
-.nav-center { order: 2; justify-content: center; flex: 1; }
-.nav-right { order: 3; justify-content: flex-end; flex-shrink: 0; }
+.header-left {
+  width: auto;
+}
+.header-center {
+  justify-content: center;
+  flex: 1;
+}
+.header-right {
+  width: auto;
+}
 
 /* Nav list */
-.nav-list {
+.header-list {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* or 2%, NOT 10% */
+  gap: 1.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.nav-list li {
-  flex: 1 1 0;
-  min-width: 0; /* Critical: allows shrinking */
-  text-align: center;
-}
-
-.nav-list li a {
+.header-list li a {
   text-decoration: none;
   color: var(--text);
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
-.nav-list li a:hover {
+.header-list li a:hover {
   color: var(--accent);
 }
 
@@ -73,7 +76,7 @@ button.theme-toggle:hover {
 }
 
 /* Home logo */
-.nav-left a svg {
+.header-left a svg {
   height: 25px;
   width: auto;
 }

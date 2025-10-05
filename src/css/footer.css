@@ -1,12 +1,12 @@
 /* Base footer styles */
 footer {
   text-align: center;
-  padding: 3rem 1rem; /* use the larger padding from new footer */
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
   background-color: var(--header-bg);
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12px; /* consistent with new footer */
+  font-size: 14px;
   color: var(--muted);
-  width: 100%;
 }
 
 /* Footer top layout */
