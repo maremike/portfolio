@@ -29,13 +29,14 @@ header {
 }
 .header-right {
   width: auto;
+  gap: 2vw;
 }
 
 /* Nav list */
 .header-list {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 3vw;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -52,15 +53,6 @@ header {
   color: var(--accent);
 }
 
-/* Hamburger button */
-.burger {
-  display: none;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
 /* Buttons (theme toggle) */
 button.theme-toggle {
   cursor: pointer;
@@ -71,18 +63,7 @@ button.theme-toggle {
   transition: transform 120ms ease;
 }
 
-button.theme-toggle:hover {
-  transform: translateY(-1px);
-}
-
-/* Home logo */
-.header-left a svg {
-  height: 25px;
-  width: auto;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+@media (max-width: --mobile-breakpoint) {
   .burger {
     display: block;
   }

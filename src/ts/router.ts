@@ -11,6 +11,7 @@ import { renderTosPage } from "./pages/tos";
 import { renderSupportPage } from "./pages/support";
 import { renderSkillsPage } from "./pages/skills";
 import { renderResumePage } from "./pages/resume";
+import { extractLangAndPath } from "./language";
 
 // Define type for page render function
 type PageRenderFunction = () => string | HTMLElement;
@@ -61,11 +62,32 @@ export function initRouter(): void {
 }
 
 export function navigateTo(path: string): void {
-  history.pushState({}, "", path);
-  render(path);
+  // Extract current lang from current URL
+  const { lang: currentLang } = extractLangAndPath(window.location.pathname);
+  console.log("Current Path:", window.location.pathname);
+
+  // Extract lang from the new path too (maybe it's absolute like /en/products)
+  const { lang: newLang } = extractLangAndPath(path);
+  console.log("New Path:", path);
+
+  let finalPath = path;
+
+  if (!newLang && currentLang) {
+    // If the new path does NOT have lang, but current URL has lang, add it
+    finalPath = "/" + currentLang + (path.startsWith("/") ? path : "/" + path);
+  } else if (newLang) {
+    // The new path already contains a language prefix, so keep as is
+    finalPath = path;
+  } else {
+    // Neither current nor new has a lang prefix, leave path as is
+    finalPath = path;
+  }
+
+  history.pushState({}, "", finalPath);
+  render(finalPath);
 }
 
-function render(path: string): void {
+function render(fullPath: string): void {
   const main = document.querySelector("main");
 
   if (!main) {
@@ -73,17 +95,16 @@ function render(path: string): void {
     return;
   }
 
-  main.innerHTML = "";
-
+  const { path } = extractLangAndPath(fullPath);
   const contentFn = routes[path] || render404Page;
 
-  // If showing 404, update the address bar
-  if (contentFn === render404Page && window.location.pathname !== "/404") {
+  if (contentFn === render404Page && fullPath !== "/404") {
     history.replaceState({}, "", "/404");
   }
 
-  const content = contentFn();
+  main.innerHTML = "";
 
+  const content = contentFn();
   if (typeof content === "string") {
     main.innerHTML = content;
   } else {

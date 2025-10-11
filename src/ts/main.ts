@@ -2,6 +2,7 @@ import { initRouter } from "./router";
 import { createHeader } from "./header";
 import { createFooter } from "./footer";
 import { initTheme } from "./utility/themes";
+import { initLanguage } from "./language";
 
 function init() {
     // Setup Background
@@ -15,6 +16,7 @@ function init() {
 
     createFooter();
 
+    initLanguage();
     initRouter();
 }
 

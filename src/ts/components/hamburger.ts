@@ -1,3 +1,5 @@
+import { navigateTo } from "../router";
+
 export interface NavItem {
   text?: string;
   href: string;
@@ -25,10 +27,7 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
 
     // Handle routing (replace this with your SPA router if needed)
     button.addEventListener("click", () => {
-      // Example: For a simple SPA using pushState
-      window.history.pushState({}, "", item.href);
-      window.dispatchEvent(new PopStateEvent("popstate")); // Let your router react to the change
-
+      navigateTo(item.href);
       closeMenu();
     });
 
