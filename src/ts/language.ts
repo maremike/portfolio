@@ -4,11 +4,16 @@ export function isSupportedLanguage(code: string): boolean {
   return SUPPORTED_LANGUAGES.includes(code);
 }
 
-export function initLanguage(): string {
+export function detectLanguage(): string {
   const rawLang = navigator.language || navigator.languages[0] || 'en';
   const browserLang = rawLang.split('-')[0].toLowerCase();
   const defaultLang = isSupportedLanguage(browserLang) ? browserLang : 'en';
+  return defaultLang;
+}
 
+export function initLanguage(): string {
+  const defaultLang = detectLanguage();
+  
   const path = window.location.pathname;
   const pathParts = path.split('/').filter(Boolean); // e.g. ['', 'about'] → ['about']
 

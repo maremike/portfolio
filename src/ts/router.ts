@@ -11,7 +11,7 @@ import { renderTosPage } from "./pages/tos";
 import { renderSupportPage } from "./pages/support";
 import { renderSkillsPage } from "./pages/skills";
 import { renderResumePage } from "./pages/resume";
-import { extractLangAndPath } from "./language";
+import { detectLanguage, extractLangAndPath } from "./language";
 
 // Define type for page render function
 type PageRenderFunction = () => string | HTMLElement;
@@ -80,7 +80,7 @@ export function navigateTo(path: string): void {
     finalPath = path;
   } else {
     // Neither current nor new has a lang prefix, leave path as is
-    finalPath = path;
+    finalPath = "/" + detectLanguage() + (path.startsWith("/") ? path : "/" + path);
   }
 
   history.pushState({}, "", finalPath);
@@ -95,11 +95,16 @@ function render(fullPath: string): void {
     return;
   }
 
-  const { path } = extractLangAndPath(fullPath);
+  // Extract the language and path from the URL
+  const { lang, path } = extractLangAndPath(fullPath);
+
+  // Ensure the /404 path handles language correctly
   const contentFn = routes[path] || render404Page;
 
+  // If rendering 404 page, replace the URL with the correct language version of /404
   if (contentFn === render404Page && fullPath !== "/404") {
-    history.replaceState({}, "", "/404");
+    const new404Path = `/${lang}/404`; // Make sure to include the language prefix
+    history.replaceState({}, "", new404Path);
   }
 
   main.innerHTML = "";
@@ -111,3 +116,4 @@ function render(fullPath: string): void {
     main.appendChild(content);
   }
 }
+
