@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 /* Base header styles */
 header {
   width: 100%;
@@ -9,28 +11,28 @@ header {
   transition: background-color 240ms ease, color 240ms ease;
 }
 
-/* Navbar layout */
-.navbar {
+/* Header layout */
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
 }
 
-.nav-left,
-.nav-center,
-.nav-right {
+.header-left,
+.header-center,
+.header-right {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.nav-left { order: 1; justify-content: flex-start; }
-.nav-center { order: 2; justify-content: center; flex: 1; }
-.nav-right { order: 3; justify-content: flex-end; flex-shrink: 0; }
+.header-left { order: 1; justify-content: flex-start; }
+.header-center { order: 2; justify-content: center; flex: 1; }
+.header-right { order: 3; justify-content: flex-end; flex-shrink: 0; }
 
 /* Nav list */
-.nav-list {
+.header-list {
   list-style: none;
   display: flex;
   justify-content: center;
@@ -39,14 +41,14 @@ header {
   padding: 0;
 }
 
-.nav-list li a {
+.header-list li a {
   text-decoration: none;
   color: var(--text);
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
-.nav-list li a:hover {
+.header-list li a:hover {
   color: var(--accent);
 }
 
@@ -74,13 +76,13 @@ button.theme-toggle:hover {
 }
 
 /* Home logo */
-.nav-left a svg {
+.header-left a svg {
   height: 25px;
   width: auto;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: $mobile-breakpoint) {
   .burger {
     display: block;
   }
