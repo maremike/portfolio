@@ -1,12 +1,12 @@
 /* Base footer styles */
 footer {
   text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 1.5rem;
+  padding: 3rem 1rem; /* use the larger padding from new footer */
   background-color: var(--header-bg);
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
+  font-size: 12px; /* consistent with new footer */
   color: var(--muted);
+  width: 100%;
 }
 
 /* Footer top layout */
@@ -58,7 +58,7 @@ footer {
 }
 
 /* Responsive layout */
-@media (max-width: --mobile-breakpoint) {
+@media (max-width: 768px) {
   .footer-top {
     flex-direction: column;
     align-items: center;

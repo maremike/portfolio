@@ -19,20 +19,20 @@ export function createHeader(initialColorScheme: ColorScheme): void {
 
   // --- Header container ---
   const header = document.createElement("header");
-  header.className = "header";
+  header.className = "navbar";
 
   header.innerHTML = `
-    <div class="header-left">
+    <div class="nav-left">
       <a href="/" id="home-logo"></a>
     </div>
 
-    <div class="header-center">
-      <ul class="header-list">
+    <div class="nav-center">
+      <ul class="nav-list">
         ${navItems.map(item => `<li><a href="${item.href}">${item.text ?? ""}</a></li>`).join("")}
       </ul>
     </div>
 
-    <div class="header-right">
+    <div class="nav-right">
       <button id="theme-toggle" class="theme-toggle"></button>
     </div>
   `;
@@ -42,8 +42,8 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   // --- References ---
   const homeLink = header.querySelector<HTMLAnchorElement>("#home-logo")!;
   const toggleBtn = header.querySelector<HTMLButtonElement>("#theme-toggle")!;
-  const headerRight = header.querySelector<HTMLDivElement>(".header-right")!;
-  const ul = header.querySelector<HTMLUListElement>(".header-list")!;
+  const navRight = header.querySelector<HTMLDivElement>(".nav-right")!;
+  const ul = header.querySelector<HTMLUListElement>(".nav-list")!;
 
   // --- Load logo SVG ---
   async function loadSVG(container: HTMLElement, url: string, height: number = 25) {
@@ -98,7 +98,7 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   // --- Hamburger menu ---
   const burger = createHamburgerMenu(navItems);
   burger.classList.add("burger");
-  headerRight.appendChild(burger);
+  navRight.appendChild(burger);
 
   // --- Global SPA click interception ---
   document.body.addEventListener("click", (e: MouseEvent) => {
@@ -122,7 +122,7 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   }
 
   function updateNavDisplay(): void {
-    const rightItems = Array.from(headerRight.children).filter(el => el !== burger) as HTMLElement[];
+    const rightItems = Array.from(navRight.children).filter(el => el !== burger) as HTMLElement[];
     if (isCrowded(header, ul, rightItems, 225)) {
       ul.style.display = "none";
       burger.style.display = "block";
