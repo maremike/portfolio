@@ -1,99 +1,49 @@
-:root{
-  /* Light theme defaults */
-  --bg: #ffffff;
-  --text: #121212;
-  --muted: #777777;
-  --header-bg: #f5f5f5;
-  --card-bg: #ffffff;
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --accent: #00bcd4;
-  --button-bg: var(--accent);
-  --button-text: #121212;
+@use "variables" as *;
 
-  /* overlay opacities */
-  --bg-layer-opacity: 1;
-  --overlay-opacity: 1;
-}
-
-/* Respect system preference if JS hasn't set data-theme */
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme]) {
-    --bg: #121212;
-    --text: #f0f0f0;
-    --muted: #9a9a9a;
-    --header-bg: #1f1f1f;
-    --card-bg: #222222;
-    --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
-    --accent: #00bcd4;
-    --button-bg: var(--accent);
-    --button-text: #121212;
-    --bg-layer-opacity: 1;
-    --overlay-opacity: 1;
-  }
-}
-
-@media (prefers-color-scheme: light){
-  :root:not([data-theme]) {
-    /* nothing — defaults above already light */
-  }
-}
-
-/* Explicit themes via JS */
-:root[data-theme="dark"]{
-  --bg: #121212;
-  --text: #f0f0f0;
-  --muted: #9a9a9a;
-  --header-bg: #1f1f1f;
-  --card-bg: #222222;
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
-  --accent: #00bcd4;
-  --button-bg: var(--accent);
-  --button-text: #121212;
-  --bg-layer-opacity: 1;
-  --overlay-opacity: 1;
-}
-
-:root[data-theme="light"]{
-  --bg: #ffffff;
-  --text: #121212;
-  --muted: #777777;
-  --header-bg: #f5f5f5;
-  --card-bg: #ffffff;
-  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --accent: #00bcd4;
-  --button-bg: var(--accent);
-  --button-text: #121212;
-  --bg-layer-opacity: 1;
-  --overlay-opacity: 1;
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  height: 100%;
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: $main-font-size;
+  line-height: $main-line-height;
+  list-style: none;
+  text-decoration: none;
+  background: transparent;
+  vertical-align: baseline;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
   background-color: var(--bg);
   color: var(--text);
-  line-height: 1.6;
   transition: background-color 240ms ease, color 240ms ease;
 
+  // Layout
   display: flex;
   flex-direction: column;
 }
 
 main {
   flex: 1; /* pushes footer to the bottom */
+
+  @media (max-width: $mobile-breakpoint) {
+    padding-top: $header-height-mobile;
+    padding-bottom: $footer-height-mobile;
+  }
+  @media (min-width: $tv-breakpoint) {
+    padding-top: $header-height-tv;
+    padding-bottom: $footer-height-tv;
+  }
+  @media (min-width: $desktop-breakpoint) {
+    padding-top: $header-height-desktop;
+    padding-bottom: $footer-height-desktop;
+  }
 }
 
 /* sections */
 .section {
-  padding: 3rem 1rem;
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 h1, h2 {

@@ -2,3 +2,87 @@
 $mobile-breakpoint: 768px;
 $desktop-breakpoint: 992px;
 $tv-breakpoint: 1200px;
+
+// Layout
+$main-font-size: 12pt;
+$main-line-height: 1.6rem;
+
+// Header
+$header-height-mobile: 1rem;
+$header-height-desktop: 2rem;
+$header-height-tv: 2.5rem;
+
+// Footer
+$footer-height-mobile: 10rem;
+$footer-height-desktop: 10rem;
+$footer-height-tv: 10rem;
+
+// Themes
+:root{
+  /* Light theme defaults */
+  --bg: #ffffff;
+  --text: #121212;
+  --muted: #777777;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+
+  /* overlay opacities */
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
+}
+
+/* Respect system preference if JS hasn't set data-theme */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme]) {
+    --bg: #121212;
+    --text: #f0f0f0;
+    --muted: #9a9a9a;
+    --header-bg: #1f1f1f;
+    --card-bg: #222222;
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    --accent: #00bcd4;
+    --button-bg: var(--accent);
+    --button-text: #121212;
+    --bg-layer-opacity: 1;
+    --overlay-opacity: 1;
+  }
+}
+
+@media (prefers-color-scheme: light){
+  :root:not([data-theme]) {
+    /* nothing — defaults above already light */
+  }
+}
+
+/* Explicit themes via JS */
+:root[data-theme="dark"]{
+  --bg: #121212;
+  --text: #f0f0f0;
+  --muted: #9a9a9a;
+  --header-bg: #1f1f1f;
+  --card-bg: #222222;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
+}
+
+:root[data-theme="light"]{
+  --bg: #ffffff;
+  --text: #121212;
+  --muted: #777777;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --accent: #00bcd4;
+  --button-bg: var(--accent);
+  --button-text: #121212;
+  --bg-layer-opacity: 1;
+  --overlay-opacity: 1;
+}
