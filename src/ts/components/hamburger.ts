@@ -8,8 +8,9 @@ export interface NavItem {
 
 export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
   // --- Fullscreen overlay ---
-  const overlay: HTMLDivElement = document.createElement("div");
+  const overlay: HTMLElement = document.createElement("nav");
   overlay.className = "hamburger-overlay";
+  overlay.setAttribute("aria-label", "Primary navigation");
 
   // --- Nav items ---
   const buttons: HTMLButtonElement[] = [];
@@ -40,7 +41,7 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
   // --- Close button (X) ---
   const closeBtn: HTMLButtonElement = document.createElement("button");
   closeBtn.className = "hamburger-close";
-  closeBtn.innerHTML = "✖";
+  closeBtn.innerHTML = "x";
   document.body.appendChild(closeBtn);
 
   // --- Hamburger button ---
