@@ -11,7 +11,7 @@ export function detectLanguage(): string {
   return defaultLang;
 }
 
-export function initLanguage(): string {
+export function initLanguage(): void {
   const defaultLang = detectLanguage();
   
   const path = window.location.pathname;
@@ -19,30 +19,23 @@ export function initLanguage(): string {
 
   const firstSegment = pathParts[0];
 
-  // CASE 1: URL starts with a language code
   if (isSupportedLanguage(firstSegment)) {
-    return firstSegment; // already correct
-  }
-
-  // CASE 2: Starts with unsupported language (e.g., /fr/...)
-  if (firstSegment && firstSegment.length === 2) {
+  } else if (firstSegment && firstSegment.length === 2) {
     pathParts[0] = defaultLang;
     const newPath = '/' + pathParts.join('/');
     redirectTo(newPath);
-    return defaultLang;
+  } else {
+    const newPath = '/' + [defaultLang, ...pathParts].join('/');
+    redirectTo(newPath);
   }
-
-  // CASE 3: No language code in path at all (e.g., /about, /, etc.)
-  const newPath = '/' + [defaultLang, ...pathParts].join('/');
-  redirectTo(newPath);
-  return defaultLang;
 }
 
 function redirectTo(newPath: string) {
   const search = window.location.search;
   const hash = window.location.hash;
   const fullUrl = `${newPath}${search}${hash}`;
-  window.location.replace(fullUrl);
+
+  window.history.pushState({}, '', fullUrl);
 }
 
 export function extractLangAndPath(fullPath: string): { lang: string | null; path: string } {

@@ -67,7 +67,7 @@ function init() {
   const colorScheme = initTheme();
 
   // Detect and initialize language, get the detected language string
-  const currentLanguage = initLanguage();
+  initLanguage();
 
   // Build page structure (optionally, you can pass language if needed)
   createHeader(colorScheme);
@@ -81,9 +81,6 @@ function init() {
 
   // Initialize router (can potentially receive language if needed)
   initRouter();
-
-  // For debugging or future use, you can log or work with currentLanguage here:
-  console.log("Current language detected:", currentLanguage);
 }
 
 document.addEventListener("DOMContentLoaded", init);

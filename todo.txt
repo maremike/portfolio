@@ -1,7 +1,5 @@
-- Add Icons
 - Add Captcha for contacting
 - Implement contact logic
-- Add different Languages (via /de /en /sp /ru /ch /it /fr)
 - Add Myspace/like with techno Page dimden.dev
 - Check out other websites
 - KISS
@@ -23,7 +21,4 @@
 - Impressum
 
 - Add Support (Buy me a Coffee, Patreon, Ko-Fi, Paypal Business)
-
-- Add global method to check for mobile or make everything dynamic
-
 - Add logo to footer
