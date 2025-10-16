@@ -81,9 +81,34 @@ button.theme-toggle:hover {
   width: auto;
 }
 
-/* Responsive */
+/* Header container for mobile */
 @media (max-width: $mobile-breakpoint) {
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: top 0.3s ease;
+    background-color: var(--header-bg);
+    padding: 0.5rem 1rem;
+  }
+
+  /* Hide header when collapsed, show burger */
+  .header.collapsed {
+    top: -100px; /* Hide the header when scrolling down */
+  }
+  
   .burger {
     display: block;
+    z-index: 1001; /* Make sure burger is above other content */
+  }
+}
+
+/* Sticky header behavior on desktop */
+@media (min-width: $mobile-breakpoint) {
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 }
