@@ -81,21 +81,28 @@ button.theme-toggle:hover {
   width: auto;
 }
 
-/* Sticky header on both desktop and mobile */
+/* Add smooth scrolling for the entire body */
+body {
+  scroll-behavior: smooth;
+  margin-top: 0;
+}
+
 @media (max-width: $mobile-breakpoint) {
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background-color: var(--header-bg);
-    padding: 0.5rem 1rem;
+  .header-list {
+    display: none;
   }
+  
   .burger {
     display: block;
   }
 }
 
-/* Add this for better smooth scrolling effect */
-body {
-  scroll-behavior: smooth;
+@media (min-width: $mobile-breakpoint) {
+  .header-list {
+    display: flex;
+  }
+  
+  .burger {
+    display: none;
+  }
 }

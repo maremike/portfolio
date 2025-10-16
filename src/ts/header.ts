@@ -99,39 +99,4 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   const burger = createHamburgerMenu(navItems);
   burger.classList.add("burger");
   headerRight.appendChild(burger);
-
-  // --- Global SPA click interception ---
-  document.body.addEventListener("click", (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const link = target.closest("a") as HTMLAnchorElement | null;
-    if (!link) return;
-    // Only intercept internal links
-    if (!link.href.startsWith(window.location.origin)) return;
-
-    e.preventDefault();
-    const path = new URL(link.href).pathname;
-
-    navigateTo(path); // Use SPA router
-  });
-
-  // --- Responsive logic ---
-  function isCrowded(container: HTMLElement, target: HTMLElement, excludeElements: HTMLElement[] = [], gap: number = 0): boolean {
-    const excludedWidth = excludeElements.reduce((total, el) => total + el.offsetWidth, 0);
-    const availableWidth = container.offsetWidth - excludedWidth - gap;
-    return target.scrollWidth > availableWidth;
-  }
-
-  function updateNavDisplay(): void {
-    const rightItems = Array.from(headerRight.children).filter(el => el !== burger) as HTMLElement[];
-    if (isCrowded(header, ul, rightItems, 225)) {
-      ul.style.display = "none";
-      burger.style.display = "block";
-    } else {
-      ul.style.display = "flex";
-      burger.style.display = "none";
-    }
-  }
-
-  updateNavDisplay();
-  window.addEventListener("resize", updateNavDisplay);
 }
