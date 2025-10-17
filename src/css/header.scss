@@ -4,10 +4,18 @@
 header {
   position: fixed;
   top: 0;
+  height: $header-height-desktop;
+  @media(max-width: $mobile-breakpoint) {
+    height: $header-height-mobile;
+  }
+  padding: 0 1rem;
   width: 100%;
-  background-color: var(--header-bg);
-  z-index: 100;
+  z-index: 1;
   transition: background-color 240ms ease, color 240ms ease;
+  
+  background-color: var(--header-bg);
+  backdrop-filter: blur(7px); 
+  -webkit-backdrop-filter: blur(7px);
 }
 
 /* Header layout */

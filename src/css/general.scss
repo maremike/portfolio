@@ -26,18 +26,12 @@ body {
 
 main {
   flex: 1; /* pushes footer to the bottom */
+  padding-bottom: $main-bottom-padding;
+
+  padding-top: $header-height-desktop + $main-top-padding;
 
   @media (max-width: $mobile-breakpoint) {
     padding-top: $header-height-mobile;
-    padding-bottom: $footer-height-mobile;
-  }
-  @media (min-width: $tv-breakpoint) {
-    padding-top: $header-height-tv;
-    padding-bottom: $footer-height-tv;
-  }
-  @media (min-width: $desktop-breakpoint) {
-    padding-top: $header-height-desktop;
-    padding-bottom: $footer-height-desktop;
   }
 }
 
@@ -48,4 +42,71 @@ main {
 
 h1, h2 {
   color: var(--accent);
+}
+
+// Themes
+:root{
+  /* Light theme defaults */
+  --bg: $light-bg;
+  --text: $light-text;
+  --muted: $light-muted;
+  --header-bg: $light-header-bg;
+  --card-bg: $light-card-bg;
+  --card-shadow: $light-card-shadow;
+  --accent: $light-accent;
+  --button-bg: $light-button-bg;
+  --button-text: $light-button-text;
+  --bg-layer-opacity: $light-bg-layer-opacity;
+  --overlay-opacity:$light-overlay-opacity;
+}
+
+/* Respect system preference if JS hasn't set data-theme */
+@media (prefers-color-scheme: light){
+  :root:not([data-theme]) {
+    /* nothing — defaults above already light */
+  }
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme]) {
+    --bg: $dark-bg;
+    --text: $dark-text;
+    --muted: $dark-muted;
+    --header-bg: $dark-header-bg;
+    --card-bg: $dark-card-bg;
+    --card-shadow: $dark-card-shadow;
+    --accent: $dark-accent;
+    --button-bg: $dark-button-bg;
+    --button-text: $dark-button-text;
+    --bg-layer-opacity: $dark-bg-layer-opacity;
+    --overlay-opacity:$dark-overlay-opacity;
+  }
+}
+
+/* Explicit themes via JS */
+:root[data-theme="light"] {
+  --bg: #{$light-bg};
+  --text: #{$light-text};
+  --muted: #{$light-muted};
+  --header-bg: #{$light-header-bg};
+  --card-bg: #{$light-card-bg};
+  --card-shadow: #{$light-card-shadow};
+  --accent: #{$light-accent};
+  --button-bg: #{$light-button-bg};
+  --button-text: #{$light-button-text};
+  --bg-layer-opacity: #{$light-bg-layer-opacity};
+  --overlay-opacity: #{$light-overlay-opacity};
+}
+
+:root[data-theme="dark"] {
+  --bg: #{$dark-bg};
+  --text: #{$dark-text};
+  --muted: #{$dark-muted};
+  --header-bg: #{$dark-header-bg};
+  --card-bg: #{$dark-card-bg};
+  --card-shadow: #{$dark-card-shadow};
+  --accent: #{$dark-accent};
+  --button-bg: #{$dark-button-bg};
+  --button-text: #{$dark-button-text};
+  --bg-layer-opacity: #{$dark-bg-layer-opacity};
+  --overlay-opacity: #{$dark-overlay-opacity};
 }
