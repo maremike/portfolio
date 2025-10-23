@@ -42,7 +42,7 @@ function init() {
   if (!document.querySelector('meta[name="viewport"]')) {
     const metaViewport = document.createElement("meta");
     metaViewport.name = "viewport";
-    metaViewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
+    metaViewport.content = "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes";
     document.head.appendChild(metaViewport);
   }
 
