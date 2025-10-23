@@ -1,4 +1,5 @@
 import { navigateTo } from "../router";
+import { getThemeSVG, loadSVG } from "../utility/svg";
 
 export interface NavItem {
   text?: string;
@@ -23,7 +24,8 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
     // --- Right arrow/diamond ---
     const arrow: HTMLSpanElement = document.createElement("span");
     arrow.className = "hamburger-arrow";
-    arrow.textContent = "❯";
+    loadSVG(arrow, getThemeSVG("https://cdn.michael.markov.uk/icons/bootstrap/ffffffff/chevron-right.svg", 
+      "https://cdn.michael.markov.uk/icons/bootstrap/000000ff/chevron-right.svg"));
     button.appendChild(arrow);
 
     // Handle routing (replace this with your SPA router if needed)
@@ -41,13 +43,15 @@ export function createHamburgerMenu(navItems: NavItem[]): HTMLButtonElement {
   // --- Close button (X) ---
   const closeBtn: HTMLButtonElement = document.createElement("button");
   closeBtn.className = "hamburger-close";
-  closeBtn.innerHTML = "x";
+  loadSVG(closeBtn, getThemeSVG("https://cdn.michael.markov.uk/icons/bootstrap/ffffffff/x.svg", 
+    "https://cdn.michael.markov.uk/icons/bootstrap/000000ff/x.svg"));
   document.body.appendChild(closeBtn);
 
   // --- Hamburger button ---
   const burger: HTMLButtonElement = document.createElement("button");
   burger.className = "burger";
-  burger.innerHTML = "☰";
+  loadSVG(burger, getThemeSVG("https://cdn.michael.markov.uk/icons/bootstrap/ffffffff/list.svg", 
+    "https://cdn.michael.markov.uk/icons/bootstrap/000000ff/list.svg"));
   document.body.appendChild(burger);
 
   // --- Toggle overlay ---

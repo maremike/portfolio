@@ -17,7 +17,7 @@ const backgroundsInitialized = {
     space: false
 };
 
-export function checkColorScheme() {
+export function checkColorScheme(): "dark" | "light" {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.documentElement.classList.add('dark-mode');

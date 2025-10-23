@@ -1,5 +1,6 @@
 import { switchToDarkMode, switchToLightMode } from "./utility/themes";
 import { createHamburgerMenu, type NavItem } from "./components/hamburger";
+import { addSVGToWatcher, getThemeSVG, loadSVG, notifyThemeChange } from "./utility/svg";
 
 type ColorScheme = "dark" | "light";
 
@@ -43,37 +44,14 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   const toggleBtn = header.querySelector<HTMLButtonElement>("#theme-toggle")!;
   const headerRight = header.querySelector<HTMLDivElement>(".header-right")!;
 
-  // --- Load logo SVG ---
-  async function loadSVG(container: HTMLElement, url: string, height: number = 25) {
-    try {
-      const res = await fetch(url);
-      const svgText = await res.text();
-      container.innerHTML = svgText;
-      const svgEl = container.querySelector("svg");
-      if (svgEl) {
-        svgEl.setAttribute("height", `${height}`);
-        svgEl.setAttribute("width", "auto");
-      }
-    } catch (err) {
-      console.error("Failed to load SVG:", err);
-    }
-  }
-
-  const homeLogo = {
-    dark: "https://cdn.michael.markov.uk/logos/000000ff/0.svg",
-    light: "https://cdn.michael.markov.uk/logos/ffffffff/0.svg"
-  };
-  loadSVG(homeLink, colorScheme === "dark" ? homeLogo.light : homeLogo.dark);
-
-  // --- Theme toggle ---
-  async function updateToggleIcon() {
-    const iconUrl =
-      colorScheme === "dark"
-        ? "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffffff/cloud-moon.svg"
-        : "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000ff/sun.svg";
-    await loadSVG(toggleBtn, iconUrl);
-  }
-  updateToggleIcon();
+  addSVGToWatcher(homeLink,
+    "https://cdn.michael.markov.uk/logos/ffffffff/0.svg",
+    "https://cdn.michael.markov.uk/logos/000000ff/0.svg"
+  );
+  addSVGToWatcher(toggleBtn,
+      "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffffff/cloud-moon.svg",
+      "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000ff/sun.svg"
+    );
 
   toggleBtn.addEventListener("click", async () => {
     if (isSwitching) return;
@@ -82,16 +60,14 @@ export function createHeader(initialColorScheme: ColorScheme): void {
     if (colorScheme === "dark") {
       colorScheme = "light";
       await switchToLightMode();
-      await loadSVG(homeLink, homeLogo.dark);
     } else {
       colorScheme = "dark";
       await switchToDarkMode();
-      await loadSVG(homeLink, homeLogo.light);
     }
-
-    await updateToggleIcon();
+    notifyThemeChange();
     isSwitching = false;
   });
+
 
   // --- Hamburger menu ---
   const burger = createHamburgerMenu(navItems);

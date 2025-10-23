@@ -4,11 +4,11 @@ import { createFooter } from "./footer";
 import { initTheme } from "./utility/themes";
 import { initLanguage } from "./language";
 
+import "../css/general.scss";
 import "../css/accessibility.scss";
 import "../css/background.scss";
 import "../css/content.scss";
 import "../css/footer.scss";
-import "../css/general.scss";
 import "../css/hamburger.scss";
 import "../css/header.scss";
 import "../css/utility.scss";

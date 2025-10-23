@@ -4,20 +4,23 @@ $header-breakpoint: 600px;
 $footer-breakpoint: 600px;
 
 // Layout
-$main-font-size: 1.1vw;
-$main-line-height: 1.6rem;
+$main-font-size: 12px;
+$main-font-size-mobile: 14px;
+$main-line-height: 1.6em;
 
 // Header
-$header-height-mobile: 3.5rem;
-$header-height-desktop: 3rem;
+$header-height-mobile: 3.5em;
+$header-height-desktop: 3em + (1em / 3);
+$header-gap: 4em;
+$header-list-gap: 4vw;
 
 // Body
-$main-top-padding: 2rem;
-$main-bottom-padding: 2rem;
+$main-top-padding: 2em;
+$main-bottom-padding: 2em;
 
 // Footer
-$footer-height-mobile: 10rem;
-$footer-height-desktop: 10rem;
+$footer-height-mobile: 10em;
+$footer-height-desktop: 10em;
 
 // Layers
 $z-background: 0;
@@ -26,8 +29,9 @@ $z-content: 2;
 $z-content-overlay: 3;
 $z-footer: 4;
 $z-header: 5;
-$z-ui: 6;
-$z-toast: 7;
+$z-hamburger-overlay: 6;
+$z-ui: 7;
+$z-toast: 8;
 
 
 /* Themes */
@@ -36,6 +40,7 @@ $light-bg: #ffffff;
 $light-text: #121212;
 $light-muted: #777777;
 $light-header-bg: #f5f5f56f;
+$light-footer-bg: #f5f5f5;
 $light-card-bg: #ffffff;
 $light-card-shadow: 0 2px 8px rgba(0,0,0,0.08);
 $light-accent: #00bcd4;
@@ -48,6 +53,7 @@ $dark-bg: #121212;
 $dark-text: #f0f0f0;
 $dark-muted: #9a9a9a;
 $dark-header-bg: #1f1f1f6f;
+$dark-footer-bg: #1f1f1f;
 $dark-card-bg: #222222;
 $dark-card-shadow: 0 2px 8px rgba(0,0,0,0.6);
 $dark-accent: #00bcd4;

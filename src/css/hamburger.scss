@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 /* --- Fullscreen overlay --- */
 .hamburger-overlay {
   position: fixed;
@@ -12,12 +14,16 @@
   align-items: stretch;
   transform: translateY(-100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), background 0.3s ease;
-  z-index: 1;
-  padding-top: 4rem;
+  z-index: $z-hamburger-overlay;
+  padding-top: $header-height-mobile;
 }
 
 .hamburger-overlay.open {
   transform: translateY(0);
+}
+
+.hamburger-overlay.open + .header {
+  display: none;
 }
 
 /* --- Nav links --- */
@@ -55,22 +61,32 @@
   transform: translateX(0);
 }
 
-/* --- Close button --- */
 .hamburger-close {
+  font-size: $main-font-size;
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $main-font-size-mobile;
+  }
+  top: 0;
+  right: 0;
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  font-size: 2rem;
+  height: var(--header-height);
+  width: var(--header-height);
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1;
-  display: none;
-  color: var(--text); /* theme-aware close button */
-}
+  z-index: $z-hamburger-overlay;
+  color: var(--text);
 
-.hamburger-close.visible {
-  display: block;
+  svg {
+    height: 2em;
+  }
+
+  &.visible {
+    display: flex; /* show and enable flex centering */
+  }
 }
 
 /* --- Hamburger button --- */

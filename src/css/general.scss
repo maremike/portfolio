@@ -1,27 +1,35 @@
 @use "variables" as *;
 
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   border: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: $main-font-size;
-  line-height: $main-line-height;
   list-style: none;
   text-decoration: none;
   background: transparent;
   vertical-align: baseline;
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: $main-font-size;
+  @media (max-width: $mobile-breakpoint) {
+    font-size: $main-font-size-mobile;
+  }
+  line-height: $main-line-height;
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
-  transition: background-color 240ms ease, color 240ms ease;
-
   // Layout
   display: flex;
   flex-direction: column;
+  scroll-behavior: smooth;
+  margin-top: 0;
+  height: 100vh;
+
+  // Appearance
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 240ms ease, color 240ms ease;
 }
 
 main {
@@ -51,6 +59,7 @@ h1, h2 {
   --text: $light-text;
   --muted: $light-muted;
   --header-bg: $light-header-bg;
+  --footer-bg: $light-footer-bg;
   --card-bg: $light-card-bg;
   --card-shadow: $light-card-shadow;
   --accent: $light-accent;
@@ -58,6 +67,10 @@ h1, h2 {
   --button-text: $light-button-text;
   --bg-layer-opacity: $light-bg-layer-opacity;
   --overlay-opacity:$light-overlay-opacity;
+  --header-height: #{$header-height-desktop};
+  @media (max-width: $mobile-breakpoint) {
+    --header-height: #{$header-height-mobile};
+  }
 }
 
 /* Respect system preference if JS hasn't set data-theme */
@@ -72,6 +85,7 @@ h1, h2 {
     --text: $dark-text;
     --muted: $dark-muted;
     --header-bg: $dark-header-bg;
+    --footer-bg: $dark-footer-bg;
     --card-bg: $dark-card-bg;
     --card-shadow: $dark-card-shadow;
     --accent: $dark-accent;
@@ -88,6 +102,7 @@ h1, h2 {
   --text: #{$light-text};
   --muted: #{$light-muted};
   --header-bg: #{$light-header-bg};
+  --footer-bg: #{$light-footer-bg};
   --card-bg: #{$light-card-bg};
   --card-shadow: #{$light-card-shadow};
   --accent: #{$light-accent};
@@ -102,6 +117,7 @@ h1, h2 {
   --text: #{$dark-text};
   --muted: #{$dark-muted};
   --header-bg: #{$dark-header-bg};
+  --footer-bg: #{$dark-footer-bg};
   --card-bg: #{$dark-card-bg};
   --card-shadow: #{$dark-card-shadow};
   --accent: #{$dark-accent};
