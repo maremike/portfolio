@@ -1,11 +1,10 @@
-import { switchToDarkMode, switchToLightMode } from "./utility/themes";
+import { getCurrentTheme, switchToDarkMode, switchToLightMode } from "./utility/themes";
 import { createHamburgerMenu, type NavItem } from "./components/hamburger";
-import { addSVGToWatcher, getThemeSVG, loadSVG, notifyThemeChange } from "./utility/svg";
+import { initThemedSVGs, registerThemedSVG, type themedSVGRegistry } from "./utility/svg";
 
-type ColorScheme = "dark" | "light";
+const headerSVGRegistry: themedSVGRegistry = [];
 
-export function createHeader(initialColorScheme: ColorScheme): void {
-  let colorScheme = initialColorScheme;
+export function createHeader(): void {
   let isSwitching = false;
 
   const navItems: NavItem[] = [
@@ -44,33 +43,33 @@ export function createHeader(initialColorScheme: ColorScheme): void {
   const toggleBtn = header.querySelector<HTMLButtonElement>("#theme-toggle")!;
   const headerRight = header.querySelector<HTMLDivElement>(".header-right")!;
 
-  addSVGToWatcher(homeLink,
+  registerThemedSVG(headerSVGRegistry, "home-logo", homeLink, 
     "https://cdn.michael.markov.uk/logos/ffffffff/0.svg",
     "https://cdn.michael.markov.uk/logos/000000ff/0.svg"
   );
-  addSVGToWatcher(toggleBtn,
-      "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffffff/cloud-moon.svg",
-      "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000ff/sun.svg"
-    );
+  registerThemedSVG(headerSVGRegistry, "theme-toggle", toggleBtn, 
+    "https://cdn.michael.markov.uk/icons/fontawesome/solid/ffffffff/cloud-moon.svg",
+    "https://cdn.michael.markov.uk/icons/fontawesome/solid/000000ff/sun.svg"
+  );
 
   toggleBtn.addEventListener("click", async () => {
     if (isSwitching) return;
     isSwitching = true;
 
-    if (colorScheme === "dark") {
-      colorScheme = "light";
+    if (getCurrentTheme() === "dark") {
       await switchToLightMode();
     } else {
-      colorScheme = "dark";
       await switchToDarkMode();
     }
-    notifyThemeChange();
+
     isSwitching = false;
   });
 
 
   // --- Hamburger menu ---
-  const burger = createHamburgerMenu(navItems);
+  const burger = createHamburgerMenu(navItems, headerSVGRegistry);
   burger.classList.add("burger");
   headerRight.appendChild(burger);
+
+  initThemedSVGs(headerSVGRegistry);
 }

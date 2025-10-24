@@ -81,7 +81,7 @@
   color: var(--text);
 
   svg {
-    height: 2em;
+    transform: scale(2);
   }
 
   &.visible {

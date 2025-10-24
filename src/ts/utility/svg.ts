@@ -1,72 +1,79 @@
-import { checkColorScheme } from "./themes";
+import { getCurrentTheme } from "./themes";
 
-export async function loadSVG(container: HTMLElement, url: string) {
+export function getThemeSVG(light: string, dark: string): string {
+  const colorScheme = getCurrentTheme(); // Determine mode automatically
+  const currentSvg = colorScheme === "dark" ? light : dark; // invert if needed
+  return currentSvg;
+}
+
+/**
+ * Registry for all themed SVGs across the site.
+ */
+export type themedSVGRegistry = {
+  alt: string;
+  container: HTMLElement;
+  light: string;
+  dark: string;
+}[];
+
+/**
+ * Dynamically load an SVG into a container.
+ */
+async function loadSVG(alt: string, container: HTMLElement, url: string) {
   try {
     const res = await fetch(url);
     const svgText = await res.text();
+
     container.innerHTML = svgText;
+
     const svgEl = container.querySelector("svg");
+
     if (svgEl) {
-      svgEl.setAttribute("width", "auto");
+      svgEl.setAttribute("role", "img");
+      svgEl.setAttribute("aria-label", alt);
     }
   } catch (err) {
     console.error("Failed to load SVG:", err);
   }
 }
 
-export function getThemeSVG(light: string, dark: string): string {
-  const colorScheme = checkColorScheme(); // Determine mode automatically
-  const currentSvg = colorScheme === "dark" ? light : dark; // invert if needed
-  return currentSvg;
-}
-
-type SVGWatchItem = {
-  element: HTMLElement;
-  light: string;
-  dark: string;
-};
-
-// The list of all SVGs being watched
-const svgWatchers: SVGWatchItem[] = [];
-
-// Flag to ensure system listener is registered only once
-let systemListenerRegistered = false;
-
 /**
- * Adds a new SVG element to the watcher list.
- * Automatically reloads the SVG for the current theme.
+ * Registers an SVG element with both its light and dark URLs.
+ * When the theme changes, all registered SVGs are automatically updated.
  */
-export function addSVGToWatcher(element: HTMLElement, light: string, dark: string) {
-  svgWatchers.push({ element, light, dark });
-  
-  // Load immediately
-  const currentTheme = checkColorScheme();
-  const url = currentTheme === "dark" ? dark : light;
-  loadSVG(element, url);
+export function registerThemedSVG(
+  themedSVGRegistry: themedSVGRegistry,
+  alt: string,
+  container: HTMLElement,
+  lightURL: string,
+  darkURL: string
+) {
+  themedSVGRegistry.push({ alt: alt, container, light: lightURL, dark: darkURL });
 
-  // Ensure system listener is registered once
-  if (!systemListenerRegistered && window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      reloadSVGs(e.matches ? 'dark' : 'light');
-    });
-    systemListenerRegistered = true;
-  }
+  // Load the correct version initially
+  const currentScheme = getCurrentTheme();
+  loadSVG(alt, container, currentScheme === "dark" ? lightURL : darkURL);
 }
 
 /**
- * Call this after switchToDarkMode / switchToLightMode to reload all SVGs
+ * Update all registered SVGs when the theme changes.
  */
-export function notifyThemeChange() {
-  const theme = checkColorScheme();
-  reloadSVGs(theme);
+function updateAllSVGs(themedSVGRegistry: themedSVGRegistry) {
+  const currentScheme = getCurrentTheme();
+  themedSVGRegistry.forEach(({ alt, container, light, dark }) => {
+    loadSVG(alt, container, currentScheme === "dark" ? light : dark);
+  });
 }
 
 /**
- * Reload all watched SVGs based on theme
+ * Set up listeners so that SVGs auto-update on theme change.
+ * Should be called once, right after initTheme().
  */
-function reloadSVGs(theme: 'dark' | 'light') {
-  for (const { element, light, dark } of svgWatchers) {
-    const url = theme === 'dark' ? dark : light;
-    loadSVG(element, url);
-  }
+export function initThemedSVGs(themedSVGRegistry: themedSVGRegistry) {
+  // Handle system preference change
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", () => updateAllSVGs(themedSVGRegistry));
+
+  // Optional: expose a manual trigger (for your toggle button)
+  window.addEventListener("themechange", () => updateAllSVGs(themedSVGRegistry));
 }

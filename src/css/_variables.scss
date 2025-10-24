@@ -12,7 +12,7 @@ $main-line-height: 1.6em;
 $header-height-mobile: 3.5em;
 $header-height-desktop: 3em + (1em / 3);
 $header-gap: 4em;
-$header-list-gap: 4vw;
+$header-list-gap: calc(10vw - 7em);
 
 // Body
 $main-top-padding: 2em;

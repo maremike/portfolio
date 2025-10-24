@@ -1,10 +1,11 @@
 @use "variables" as *;
+@use "mixins" as *;
 
 /* =========================
    Base Header Styles
    ========================= */
 header {
-  padding: 0 (--header-height / 2);
+  padding: 0 calc(var(--header-height) / 2);
   @media (max-width: $mobile-breakpoint) {
     padding: 0;
   }
@@ -16,8 +17,6 @@ header {
   height: var(--header-height);
   z-index: $z-header;
 
-  
-
   // Appearance
   background-color: var(--header-bg);
   backdrop-filter: blur(7px);
@@ -25,8 +24,7 @@ header {
   transition: background-color 240ms ease, color 240ms ease;
 
   .header-left {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     height: 100%;
     order: 1;
     justify-content: flex-start;
@@ -45,18 +43,15 @@ header {
   }
 
   .header-center {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     height: 100%;
     gap: 1em;
     order: 2;
-    justify-content: center;
     flex: 1;
   }
 
   .header-right {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     height: 100%;
     order: 3;
     justify-content: flex-end;
@@ -67,9 +62,7 @@ header {
      Navigation
      ========================= */
   .header-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
     gap: $header-list-gap;
     height: 100%;
     list-style: none;
@@ -78,9 +71,7 @@ header {
       height: 100%;
 
       a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flex-center;
         height: 100%;
         padding: 0 (($header-height-desktop - 1.5em) / 2);
         color: var(--text);
@@ -99,9 +90,7 @@ header {
      Theme Toggle Button
      ========================= */
   button.theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     height: 100%;
     width: var(--header-height);
     cursor: pointer;
@@ -121,41 +110,24 @@ header {
      ========================= */
   .burger {
     font-size: $main-font-size;
+    display: none;
     @media (max-width: $mobile-breakpoint) {
       font-size: $main-font-size-mobile;
+      display: flex;
     }
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     height: 100%;
     width: var(--header-height);
 
     svg {
-      height: 1.5em;
+      transform: scale(1.5);
     }
+  }
 
-    // Show only on mobile
+  .header-list {
+    display: flex;
     @media (max-width: $mobile-breakpoint) {
-      display: flex;
-    }
-
-    @media (min-width: $mobile-breakpoint) {
       display: none;
-    }
-  }
-
-  /* =========================
-     Responsive Navigation
-     ========================= */
-  @media (max-width: $mobile-breakpoint) {
-    .header-list {
-      display: none;
-    }
-  }
-
-  @media (min-width: $mobile-breakpoint) {
-    .header-list {
-      display: flex;
     }
   }
 }

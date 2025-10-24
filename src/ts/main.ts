@@ -1,7 +1,7 @@
 import { initRouter } from "./router";
 import { createHeader } from "./header";
 import { createFooter } from "./footer";
-import { initTheme } from "./utility/themes";
+import { initTheme, setCurrentTheme } from "./utility/themes";
 import { initLanguage } from "./language";
 
 import "../css/general.scss";
@@ -12,6 +12,7 @@ import "../css/footer.scss";
 import "../css/hamburger.scss";
 import "../css/header.scss";
 import "../css/utility.scss";
+import { initThemedSVGs } from "./utility/svg";
 
 function setFavicon(href: string, media?: string) {
   const link = document.createElement("link");
@@ -63,14 +64,11 @@ function init() {
   // Create canvases dynamically
   createCanvases(["dark", "light", "sky", "space", "clouds"]);
 
-  // Setup Background / Theme
-  const colorScheme = initTheme();
-
   // Detect and initialize language, get the detected language string
   initLanguage();
 
   // Build page structure (optionally, you can pass language if needed)
-  createHeader(colorScheme);
+  createHeader();
 
   // Create main element and append it
   const main = document.createElement("main");
@@ -81,6 +79,11 @@ function init() {
 
   // Initialize router (can potentially receive language if needed)
   initRouter();
+
+  // Setup Background / Theme
+  (async () => {
+    setCurrentTheme(await initTheme());
+  })();
 }
 
 document.addEventListener("DOMContentLoaded", init);

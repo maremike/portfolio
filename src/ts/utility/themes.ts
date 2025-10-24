@@ -1,6 +1,16 @@
 import { initSkyBackground, initCloudOverlay } from "../background/sky";
 import { initSpaceOverlay } from "../background/space";
 
+let currentTheme: "dark" | "light" = "light";
+
+export function setCurrentTheme(theme: "dark" | "light") {
+    currentTheme = theme;
+}
+
+export function getCurrentTheme() {
+    return currentTheme;
+}
+
 function getBackgroundElements() {
     return {
         light: document.getElementById("light"),
@@ -17,7 +27,7 @@ const backgroundsInitialized = {
     space: false
 };
 
-export function checkColorScheme(): "dark" | "light" {
+function checkColorScheme(): "dark" | "light" {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.documentElement.classList.add('dark-mode');
@@ -46,7 +56,12 @@ export function setupColorSchemeListener() {
     });
 }
 
+function emitThemeChange() {
+  window.dispatchEvent(new Event("themechange"));
+}
+
 export async function switchToLightMode() {
+    currentTheme = "light";
     const backgroundElements = getBackgroundElements();
 
     document.documentElement.setAttribute("data-theme", "light");
@@ -55,6 +70,8 @@ export async function switchToLightMode() {
         backgroundElements.space.style.opacity = "0";
         if (backgroundElements.dark) backgroundElements.dark.style.opacity = "0";
     }
+
+    setTimeout(() => emitThemeChange(), 200);
 
     setTimeout(() => {
         if (backgroundElements.space) backgroundElements.space.style.display = "none";
@@ -81,6 +98,7 @@ export async function switchToLightMode() {
 }
 
 export async function switchToDarkMode() {
+    currentTheme = "dark";
     const backgroundElements = getBackgroundElements();
 
     document.documentElement.setAttribute("data-theme", "dark");
@@ -90,6 +108,8 @@ export async function switchToDarkMode() {
         if (backgroundElements.sky) backgroundElements.sky.style.opacity = "0";
         if (backgroundElements.clouds) backgroundElements.clouds.style.opacity = "0";
     }
+
+    setTimeout(() => emitThemeChange(), 200); 
 
     setTimeout(() => {
         if (backgroundElements.light) backgroundElements.light.style.display = "none";
@@ -110,13 +130,13 @@ export async function switchToDarkMode() {
     }
 }
 
-export function initTheme() {
+export async function initTheme() {
     const colorScheme = checkColorScheme();
     setupColorSchemeListener();
     if (colorScheme === "dark") {
-        switchToDarkMode();
+        await switchToDarkMode();
     } else {
-        switchToLightMode();
+        await switchToLightMode();
     }
     return colorScheme;
 }
