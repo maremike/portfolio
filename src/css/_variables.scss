@@ -9,18 +9,18 @@ $main-font-size-mobile: 14px;
 $main-line-height: 1.6em;
 
 // Header
-$header-height-mobile: 3.5em;
-$header-height-desktop: 3em + (1em / 3);
-$header-gap: 4em;
-$header-list-gap: calc(10vw - 7em);
+$header-height-mobile: 3.5rem;
+$header-height-desktop: 3rem + (1rem / 3);
+$header-gap: 4rem;
+$header-list-gap: calc(10vw - 7rem);
 
 // Body
-$main-top-padding: 2em;
-$main-bottom-padding: 2em;
+$main-top-padding: 2rem;
+$main-bottom-padding: 2rem;
 
 // Footer
-$footer-height-mobile: 10em;
-$footer-height-desktop: 10em;
+$footer-height-mobile: 10rem;
+$footer-height-desktop: 10rem;
 
 // Layers
 $z-background: 0;
@@ -29,9 +29,7 @@ $z-content: 2;
 $z-content-overlay: 3;
 $z-footer: 4;
 $z-header: 5;
-$z-hamburger-overlay: 6;
-$z-ui: 7;
-$z-toast: 8;
+$z-toast: 6;
 
 
 /* Themes */

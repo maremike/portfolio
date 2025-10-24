@@ -73,7 +73,7 @@ header {
       a {
         @include flex-center;
         height: 100%;
-        padding: 0 (($header-height-desktop - 1.5em) / 2);
+        padding: 0 (($header-height-desktop - 1.5rem) / 2);
         color: var(--text);
         font-weight: 600;
         text-decoration: none;
@@ -109,16 +109,14 @@ header {
      Hamburger Button
      ========================= */
   .burger {
-    font-size: $main-font-size;
+    font-size: --font-size;
+    @include flex-center;
     display: none;
     @media (max-width: $mobile-breakpoint) {
-      font-size: $main-font-size-mobile;
       display: flex;
     }
-    @include flex-center;
     height: 100%;
     width: var(--header-height);
-
     svg {
       transform: scale(1.5);
     }

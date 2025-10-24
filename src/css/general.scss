@@ -126,3 +126,7 @@ h1, h2 {
   --bg-layer-opacity: #{$dark-bg-layer-opacity};
   --overlay-opacity: #{$dark-overlay-opacity};
 }
+
+button {
+  cursor: pointer;
+}

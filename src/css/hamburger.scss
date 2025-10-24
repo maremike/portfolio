@@ -1,100 +1,128 @@
 @use "variables" as *;
+@use "mixins" as *;
 
 /* --- Fullscreen overlay --- */
 .hamburger-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: var(--bg); /* Use theme variable */
+  inset: 0;
+  background: var(--bg); // theme variable
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: stretch;
-  transform: translateY(-100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), background 0.3s ease;
-  z-index: $z-hamburger-overlay;
-  padding-top: $header-height-mobile;
-}
+  transform: translateY(-100vh);
+  transition: 
+    transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+    background 0.3s ease;
+  z-index: $z-header;
+  padding-top: var(--header-height);
 
-.hamburger-overlay.open {
-  transform: translateY(0);
-}
+  &.open {
+    transform: translateY(0);
 
-.hamburger-overlay.open + .header {
-  display: none;
+    + .header {
+      display: none;
+    }
+  }
 }
 
 /* --- Nav links --- */
 .hamburger-link {
   width: 100%;
-  padding: 1rem 2rem;
+  position: relative;
+  padding: 1rem var(--header-height);
   border: none;
   background: none;
   text-align: left;
-  font-size: 1.5rem;
-  color: var(--text); /* theme-aware text color */
+  font-size: 1.5em;
+  color: var(--text); // theme-aware text color
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
-}
+  transform: translateY(-10em);
+  transition: 
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    color 0.3s ease;
 
-.hamburger-link.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- Right arrow --- */
-.hamburger-arrow {
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.hamburger-link:hover .hamburger-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.hamburger-close {
-  font-size: $main-font-size;
-  @media (max-width: $mobile-breakpoint) {
-    font-size: $main-font-size-mobile;
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
+
+  &:hover {
+    .hamburger-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+/* --- Right Chevron --- */
+.hamburger-arrow {
+  position: absolute;
+  @include flex-center;
+  height: var(--header-height);
+  width: var(--header-height);
+  right: 0;
+  opacity: 0;
+  transform: translateX(-0.3em); // initial state
+  pointer-events: none;
+
+  .hamburger-link:hover & {
+    animation: slideIn 0.2s forwards ease-out;
+  }
+
+  .hamburger-link:not(:hover) & {
+    animation: slideOut 0.3s forwards ease-in;
+  }
+
+  svg {
+    height: 100%;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-0.3em);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(0.3em); // continue sliding right
+  }
+}
+
+/* --- Close button --- */
+.hamburger-close {
   top: 0;
   right: 0;
-  display: none; /* hidden by default */
+  display: none; // Hidden by default
   justify-content: center;
   align-items: center;
   position: fixed;
   height: var(--header-height);
   width: var(--header-height);
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: $z-hamburger-overlay;
+  z-index: $z-header;
   color: var(--text);
-
+  
   svg {
     transform: scale(2);
   }
 
   &.visible {
-    display: flex; /* show and enable flex centering */
+    display: flex; // Show when visible class is added
   }
-}
-
-/* --- Hamburger button --- */
-.burger {
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1;
-  color: var(--text); /* theme-aware burger icon */
 }
