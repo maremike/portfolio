@@ -12,7 +12,6 @@ import "../css/footer.scss";
 import "../css/hamburger.scss";
 import "../css/header.scss";
 import "../css/utility.scss";
-import { initThemedSVGs } from "./utility/svg";
 
 function setFavicon(href: string, media?: string) {
   const link = document.createElement("link");

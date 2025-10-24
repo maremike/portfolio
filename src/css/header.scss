@@ -34,7 +34,7 @@ header {
       align-items: center;
       justify-content: center;
       height: 100%;
-      width: var(--header-height);
+      width: calc(var(--header-height) * 2);
 
       svg {
         height: 1.5em;

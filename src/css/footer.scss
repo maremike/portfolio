@@ -1,78 +1,88 @@
 @use "variables" as *;
+@use "mixins" as *;
 
-/* Base footer styles */
 footer {
+  padding: 1rem calc(var(--header-height) / 2);
+  @media (max-width: $mobile-breakpoint) {
+    padding: 1rem 0;
+  }
   text-align: center;
-  padding: 3rem 1rem; /* use the larger padding from new footer */
   background-color: var(--footer-bg);
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 12px; /* consistent with new footer */
   color: var(--muted);
-  width: 100%;
+  right: 0;
   bottom: 0;
   left: 0;
-}
 
-/* Footer top layout */
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.footer-left,
-.footer-center,
-.footer-right {
-  flex: 1;
-}
-
-.footer-left {
-  text-align: left;
-}
-
-.footer-center {
-  text-align: center;
-}
-
-.footer-right {
-  text-align: right;
-}
-
-.footer-right a {
-  text-decoration: none;
-  color: var(--muted); /* inherit muted color */
-}
-
-/* Footer bottom text */
-.footer-bottom {
-  margin: 0;
-  text-align: center;
-}
-
-/* Footer links */
-.footer-links a {
-  text-decoration: none;
-  color: var(--muted);
-}
-
-.footer-links a:hover {
-  color: var(--accent);
-}
-
-/* Responsive layout */
-@media (max-width: $mobile-breakpoint) {
+  /* Footer top layout */
   .footer-top {
+    display: flex;
+  }
+
+  .footer-left {
+    flex: 1;
+    text-align: left;
+    padding-bottom: 1rem;
+  }
+
+  .footer-center {
+    flex: 1;
+    @include flex-center;
     flex-direction: column;
-    align-items: center;
+    padding-bottom: 1rem;
+  }
+
+  .footer-right {
+    flex: 1;
+    text-align: right;
+    padding-bottom: 1rem;
+    a {
+      text-decoration: none;
+      color: var(--muted); /* inherit muted color */
+    }
+  }
+
+  /* Footer bottom text */
+  .footer-bottom {
+    margin: 0;
     text-align: center;
   }
 
-  .footer-left,
-  .footer-center,
-  .footer-right {
-    flex: 1 1 100%;
-    text-align: center;
+  .footer-links {
+    a {
+      text-decoration: none;
+      color: var(--muted);
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+  }
+
+  /* Responsive layout */
+  @media (max-width: $mobile-breakpoint) {
+    .footer-top {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+  }
+
+  .footer-home-logo {
+    @include flex-center;
+    width: calc(100% / 3);
+    vertical-align: middle;
+    margin-bottom: 0.5rem;
+
+    svg {
+      @include flex-center;
+      height: 100%;
+    }
   }
 }

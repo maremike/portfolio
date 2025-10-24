@@ -1,3 +1,7 @@
+import { type themedSVGRegistry, initThemedSVGs, registerThemedSVG } from "./utility/svg.ts";
+
+const footerSVGRegistry: themedSVGRegistry = [];
+
 export function createFooter() {
   const footer = document.createElement("footer");
   footer.className = "footer"; // apply class instead of inline styles
@@ -6,11 +10,15 @@ export function createFooter() {
     <div class="footer-top">
       <!-- Left -->
       <div class="footer-left">
-        DEV
+        <p>Full-stack web development</p>
+        <p>Systems Engineering</p>
+        <p>Project Management</p>
+        <p>Lean Management Consulting</p>
       </div>
 
       <!-- Center -->
       <div class="footer-center">
+        <a href="/" id="footer-home-logo" class="footer-home-logo"></a>
         <p>MICHAEL MARKOV</p>
       </div>
 
@@ -30,5 +38,12 @@ export function createFooter() {
     </p>
   `;
 
+  const homeLogo = footer.querySelector<HTMLAnchorElement>("#footer-home-logo")!;
+  registerThemedSVG(footerSVGRegistry, "footer-home-logo", homeLogo, 
+    "https://cdn.michael.markov.uk/logos/ffffffff/0.svg",
+    "https://cdn.michael.markov.uk/logos/000000ff/0.svg"
+  );
+
   document.body.appendChild(footer);
+  initThemedSVGs(footerSVGRegistry);
 }
