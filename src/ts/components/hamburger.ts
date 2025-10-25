@@ -82,6 +82,10 @@ export function createHamburgerMenu(navItems: NavItem[], headerSVGRegistry: them
     buttons.forEach((btn) => {
       btn.classList.remove("visible");
     });
+
+    document.body.style.overflow = "";
+    document.body.style.height = "";
+
     closeBtn.classList.remove("visible");
     isOpen = false;
   }
@@ -93,9 +97,6 @@ export function createHamburgerMenu(navItems: NavItem[], headerSVGRegistry: them
   closeBtn.addEventListener("click", () => {
     closeMenu();
   });
-
-  document.body.style.overflow = "";
-  document.body.style.height = "";
 
   return burger;
 }
