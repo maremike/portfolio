@@ -4,7 +4,7 @@ import { renderStartpagePage } from "./pages/startpage";
 import { renderProductsPage } from "./pages/products";
 import { render404Page } from "./pages/404";
 import { renderMyspacePage } from "./pages/myspace";
-import { renderAboutPage } from "./pages/about";
+import { renderAboutPage } from "./pages/legal";
 import { renderPrivacyPage } from "./pages/privacy";
 import { renderSignaturePage } from "./pages/signature";
 import { renderTosPage } from "./pages/tos";
@@ -23,7 +23,7 @@ const routes: Record<string, PageRenderFunction> = {
   "/projects": renderProjectsPage,
   "/contact": renderContactPage,
   "/myspace": renderMyspacePage,
-  "/about": renderAboutPage,
+  "/legal": renderAboutPage,
   "/privacy": renderPrivacyPage,
   "/signature": renderSignaturePage,
   "/tos": renderTosPage,

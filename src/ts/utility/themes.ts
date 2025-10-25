@@ -71,21 +71,18 @@ export async function switchToLightMode() {
         if (backgroundElements.dark) backgroundElements.dark.style.opacity = "0";
     }
 
-    setTimeout(() => emitThemeChange(), 200);
+    emitThemeChange();
 
-    setTimeout(() => {
-        if (backgroundElements.space) backgroundElements.space.style.display = "none";
-        if (backgroundElements.dark) backgroundElements.dark.style.display = "none";
-        if (backgroundElements.light) backgroundElements.light.style.display = "block";
-        if (backgroundElements.sky) backgroundElements.sky.style.display = "block";
-        if (backgroundElements.clouds) backgroundElements.clouds.style.display = "block";
+    if (backgroundElements.space) backgroundElements.space.style.display = "none";
+    if (backgroundElements.dark) backgroundElements.dark.style.display = "none";
+    if (backgroundElements.light) backgroundElements.light.style.display = "block";
+    if (backgroundElements.sky) backgroundElements.sky.style.display = "block";
+    if (backgroundElements.clouds) backgroundElements.clouds.style.display = "block";
 
-        setTimeout(() => {
-            if (backgroundElements.light) backgroundElements.light.style.opacity = "1";
-            if (backgroundElements.sky) backgroundElements.sky.style.opacity = "1";
-            if (backgroundElements.clouds) backgroundElements.clouds.style.opacity = "1";
-        }, 50);
-    }, 150);
+    if (backgroundElements.light) backgroundElements.light.style.opacity = "1";
+    if (backgroundElements.sky) backgroundElements.sky.style.opacity = "1";
+    if (backgroundElements.clouds) backgroundElements.clouds.style.opacity = "1";
+
 
     if (!backgroundsInitialized.sky) {
         initSkyBackground();
@@ -109,20 +106,16 @@ export async function switchToDarkMode() {
         if (backgroundElements.clouds) backgroundElements.clouds.style.opacity = "0";
     }
 
-    setTimeout(() => emitThemeChange(), 200); 
+    emitThemeChange(); 
 
-    setTimeout(() => {
-        if (backgroundElements.light) backgroundElements.light.style.display = "none";
-        if (backgroundElements.sky) backgroundElements.sky.style.display = "none";
-        if (backgroundElements.clouds) backgroundElements.clouds.style.display = "none";
-        if (backgroundElements.dark) backgroundElements.dark.style.display = "block";
-        if (backgroundElements.space) backgroundElements.space.style.display = "block";
+    if (backgroundElements.light) backgroundElements.light.style.display = "none";
+    if (backgroundElements.sky) backgroundElements.sky.style.display = "none";
+    if (backgroundElements.clouds) backgroundElements.clouds.style.display = "none";
+    if (backgroundElements.dark) backgroundElements.dark.style.display = "block";
+    if (backgroundElements.space) backgroundElements.space.style.display = "block";
 
-        setTimeout(() => {
-            if (backgroundElements.dark) backgroundElements.dark.style.opacity = "1";
-            if (backgroundElements.space) backgroundElements.space.style.opacity = "1";
-        }, 50);
-    }, 150);
+    if (backgroundElements.dark) backgroundElements.dark.style.opacity = "1";
+    if (backgroundElements.space) backgroundElements.space.style.opacity = "1";
 
     if (!backgroundsInitialized.space) {
         initSpaceOverlay();

@@ -6,6 +6,7 @@ footer {
   @media (max-width: $mobile-breakpoint) {
     padding: 1rem 0;
   }
+  padding-bottom: calc(1rem + var(--header-height));
   text-align: center;
   background-color: var(--footer-bg);
   color: var(--muted);
@@ -19,25 +20,42 @@ footer {
   }
 
   .footer-left {
-    flex: 1;
-    text-align: left;
+    width: 35%;
+    @include flex-center;
+    flex-direction: column;
+    align-items: end;
     padding-bottom: 1rem;
+    height: 100%;
+    @media (max-width: $mobile-breakpoint) {
+      align-items: center;
+    }
   }
 
   .footer-center {
+    width: 30%;
     flex: 1;
     @include flex-center;
     flex-direction: column;
     padding-bottom: 1rem;
+    height: 100%;
   }
 
   .footer-right {
-    flex: 1;
+    width: 35%;
+    @include flex-center;
+    align-items: start;
+    justify-content: right;
+    flex-direction: column;
+    height: 100%;
     text-align: right;
     padding-bottom: 1rem;
     a {
       text-decoration: none;
       color: var(--muted); /* inherit muted color */
+    }
+    @media (max-width: $mobile-breakpoint) {
+      align-items: center;
+      flex-direction: row;
     }
   }
 
@@ -45,9 +63,14 @@ footer {
   .footer-bottom {
     margin: 0;
     text-align: center;
+    @include flex-center;
+    flex-direction: column;
+    width: 100%;
   }
 
   .footer-links {
+    @include flex-center;
+    flex-direction: row;
     a {
       text-decoration: none;
       color: var(--muted);
@@ -55,6 +78,9 @@ footer {
       &:hover {
         color: var(--accent);
       }
+    }
+    span {
+      margin: 0 0.5rem;
     }
   }
 
@@ -69,20 +95,72 @@ footer {
     .footer-left,
     .footer-center,
     .footer-right {
+      svg {
+        width: 60%;
+      }
       flex: 1 1 100%;
+      width: 100%;
       text-align: center;
     }
   }
 
   .footer-home-logo {
     @include flex-center;
-    width: calc(100% / 3);
+    width: 60%;
     vertical-align: middle;
     margin-bottom: 0.5rem;
 
     svg {
       @include flex-center;
       height: 100%;
+    }
+  }
+
+  #footer-socials {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+
+    .footer-social-item {
+      @include flex-center;
+      gap: 0.5rem;
+
+      svg {
+        left: 0;
+        bottom: 0;
+        width: 70%;
+        height: 100%;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      // Remove hover effect on single elements
+      svg, span {
+        &:hover {
+          color: none;
+        }
+      }
+
+      // Add hover effect to the entire item
+      svg path, span {
+        transition: fill 0.3s ease;
+      }
+      &:hover {
+        cursor: pointer;
+        svg path {
+          fill: var(--accent);
+        }
+        span {
+          color: var(--accent);
+        }
+      }
     }
   }
 }

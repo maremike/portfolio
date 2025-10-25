@@ -28,6 +28,7 @@ header {
     height: 100%;
     order: 1;
     justify-content: flex-start;
+    flex: 1;
 
     a {
       display: flex;
@@ -47,7 +48,6 @@ header {
     height: 100%;
     gap: 1em;
     order: 2;
-    flex: 1;
   }
 
   .header-right {
@@ -55,7 +55,7 @@ header {
     height: 100%;
     order: 3;
     justify-content: flex-end;
-    flex-shrink: 0;
+    flex: 1;
   }
 
   /* =========================
