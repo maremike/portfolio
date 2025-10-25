@@ -70,8 +70,12 @@ export function createHamburgerMenu(navItems: NavItem[], headerSVGRegistry: them
       }, i * 50);
     });
 
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100vh";
+
     isOpen = true;
   }
+
 
   function closeMenu(): void {
     overlay.classList.remove("open");
@@ -89,6 +93,9 @@ export function createHamburgerMenu(navItems: NavItem[], headerSVGRegistry: them
   closeBtn.addEventListener("click", () => {
     closeMenu();
   });
+
+  document.body.style.overflow = "";
+  document.body.style.height = "";
 
   return burger;
 }

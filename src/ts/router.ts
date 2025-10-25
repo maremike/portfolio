@@ -115,5 +115,7 @@ function render(fullPath: string): void {
   } else {
     main.appendChild(content);
   }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
